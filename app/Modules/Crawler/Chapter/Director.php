@@ -2,6 +2,7 @@
 
 namespace App\Modules\Crawler\Chapter;
 use QL\QueryList;
+use Illuminate\Support\Facades\Cache;
 
 class Director
 {
@@ -14,6 +15,16 @@ class Director
 
 	public function build($bookid)
 	{
+	    $key = __CLASS__.'::'.__FUNCTION__ .'::bookid::'.$bookid;
+	    if (!Cache::has($key)) {
+	        Cache::forever($key, $this->rebuild($bookid));
+	    }
+	    
+	    return Cache::get($key);
+	}
+	
+	private function rebuild($bookid)
+	{
 	    $result = QueryList::get($this->builder->url($bookid))
         	    ->range($this->builder->range())
         	    ->rules($this->builder->roules())
@@ -22,42 +33,6 @@ class Director
         	        return $data;
         	    });
 	    //
-	    //dump($result);exit;
         return $result;
-	}
-	
-	public function _____________build_delete($bookid)
-	{
-	    $ql = QueryList::get($this->builder->url($bookid));
-	    
-	    $tomenames = $ql->find('.chapter-list')->attrs('tomename');
-	    
-	    $result = [];
-	    
-	    foreach ($tomenames as $tname) {
-	        
-	        if ($tname == '作品相关') {
-	            continue;
-	        }
-	        
-	        $data = $ql->range('.booklist[tomename="'.$tname.'"] td')
-	        ->rules([
-	            'chapterid'   => ['', 'chapterid'],
-	            'chaptername'   => ['a', 'text'],
-	            'chaptername-t' => ['a', 'text', '', function($i) use ($tname){
-	            return $tname . ' ' . $i;
-	            }],
-	            'chapterlink'   => ['a', 'href'],
-	            ])
-	            ->query()
-	            ->getData()
-	            ;
-	            
-	            $result[] = [
-	                'tomename' => $tname,
-	                'data' => $data,
-	            ];
-	    }
-	    return $result;
 	}
 }

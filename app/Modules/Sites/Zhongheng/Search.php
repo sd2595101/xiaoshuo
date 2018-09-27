@@ -11,7 +11,6 @@ class Search implements SearchBuilderInterface
         $queryUrl  = config('sites.zhongheng.query.url');
         $paramName = config('sites.zhongheng.query.key');
         return $queryUrl . '?' . http_build_query(array($paramName => $keyword));
-        return 'http://192.168.85.101/web/zhongheng-query.html';
 	}
 
 	public function range()

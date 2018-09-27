@@ -22,7 +22,16 @@ a:hover {
   border: .05rem solid #fff;
 }
 
-
+.center {
+	text-align:center;
+}
+.content p {
+	text-align:left;
+	letter-spacing: 1px;
+    line-height: 2em;
+    text-indent: 2em;
+    padding: .5em .3em;
+}
 /*
  * Base structure
  */
@@ -138,4 +147,33 @@ body {
 }
 .mb-auto-home {
   margin-bottom: 4%;
+}
+
+.chapter-list {
+    background: #fff;
+    overflow: hidden;
+    margin-bottom: 45px;
+    margin-top: 20px;
+}
+
+.col-4 {
+    width: 30%;
+    float: left;
+    padding-right: 60px;
+}
+.chapter-list>* {
+    padding: 11px 0;
+    position: relative;
+    border-bottom: 1px #ccc dotted;
+}
+.chapter-list a {
+    float: left;
+    max-width: 80%;
+    line-height: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+li, ol, ul {
+    list-style: none;
 }

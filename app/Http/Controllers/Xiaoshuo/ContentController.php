@@ -9,6 +9,9 @@ use App\Modules\Sites\Zhongheng\Chapter;
 use App\Modules\Crawler\Book\Director as BookDirector;
 use App\Modules\Sites\Zhongheng\Book;
 
+use App\Modules\Crawler\Content\Director as ContentDirector;
+use App\Modules\Sites\Zhongheng\Content;
+
 
 class ContentController extends Controller
 {
@@ -40,18 +43,20 @@ class ContentController extends Controller
      */
     public function index($bookid,$chapterid)
     {
-//         $chapter = new Chapter();
-//         $director = new ChapterDirector($chapter);
-//         $list = $director->build($bookid);
+        $content = new Content();
+        $director = new ContentDirector($content);
+        $info = $director->build($bookid, $chapterid);
         
-//         $bookBuilder = new Book();
-//         $bookDirector = new BookDirector($bookBuilder);
-//         $info = $bookDirector->build($bookid);
-//         //dump($list);
-//         //dump($info);
-//         return view('xiaoshuo.chapter', array(
-//             'list' => $list,
-//             'book' => $info[0],
-//         ));
+        $bookBuilder = new Book();
+        $bookDirector = new BookDirector($bookBuilder);
+        $bookInfo = $bookDirector->build($bookid);
+        //dump($bookInfo);exit;
+        return view('xiaoshuo.content', array(
+            'info' => $info,
+            'book' => $bookInfo[0] ?? [],
+        ));
+
+        
+        
     }
 }

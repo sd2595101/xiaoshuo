@@ -17,7 +17,7 @@
     <link href="/css/xiaoshuo.css" rel="stylesheet">
   </head>
 
-  <body class="bravo text-center{{$bodyClass??''}}">
+  <body class="bravo center {{$bodyClass??''}}">
 
     <div class="container d-flex w-100 h-100 p-3 mx-auto flex-column">
       <header class="masthead {{$headerCssAdd ?? ''}}">
