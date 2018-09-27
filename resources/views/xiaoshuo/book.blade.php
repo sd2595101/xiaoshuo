@@ -27,7 +27,7 @@ $pageTitle = $book['title'] . '最新章节全文阅读,' . $book['title'].'无�
             <a href="{{$book['ulink']}}" class="p-1 font-weight-light" target="_blank">{{$book['uname']}}</a>
             <span class="p-1 font-weight-light"> | </span>
             <a href="{{$book['clink']}}" class="p-1 font-weight-light" target="_blank">{{$book['cname']}}</a>
-            <span class="p-1 font-weight-light text-muted" style="font-size:14px"> | 关键字 : {{$book['keyword']}}</span>
+            <span class="p-1 font-weight-light text-muted" style="font-size:14px"></span>
           </div>
           <div class="description text-left text-secondary">
             {{$book['desc']}}<br/><br/>

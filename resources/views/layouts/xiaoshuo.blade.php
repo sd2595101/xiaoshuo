@@ -22,8 +22,8 @@
     <div class="container d-flex w-100 h-100 p-3 mx-auto flex-column">
       <header class="masthead {{$headerCssAdd ?? ''}}">
         <div class="inner">
-          <h3 class="masthead-brand text-danger">
-            <a href="/" class="badge badge-secondary "><i class="fas fa-home"></i> 欢迎来到 - Bravo</a>
+          <h3 class="masthead-brand">
+            <a href="/" class="badge  "><i class="fas fa-home"></i> 欢迎来到 - Bravo</a>
           </h3>
           
           <nav class="nav nav-masthead justify-content-center">

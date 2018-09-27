@@ -1,4 +1,5 @@
 <?php
+use App\Modules\Utility\StringUtility;
 
 return [
 
@@ -86,25 +87,25 @@ return [
             'url' => function($id){return 'http://book.zongheng.com/book/'.$id.'.html';},
             //'range'  => '.box',
             'roules' => [
-                'image'         => ['.book_cover img', 'src'],
-                'image-title'   => ['.book_cover img', 'title'],
-                'serial'        => ['.book_cover .serial', '', '', function($item){
+                'image'         => ['.book-img img', 'src'],
+                'image-title'   => ['.book-img img', 'title'],
+                'serial'        => ['.book-img .serial', '', '', function($item){
                     //dump($item);
                 }],
                 //<a href="http://book.zongheng.com/showchapter/672340.html" title="剑来最新章节">剑来</a>
-                'title'         => ['.status h1 a', 'text'],
-                'book'          => ['.status h1 a', 'href'],
-                'bookid'        => ['.status h1 a', 'href', '', function($href){
+                'title'         => ['.book-info .book-name', 'text'],
+                'book'          => ['.all-catalog', 'href'],
+                'bookid'        => ['.all-catalog', 'href', '', function($href){
                                         $pregPattern = "/http:\/\/book.zongheng.com\/showchapter\/(\d+)\.html/";
                                         if (preg_match($pregPattern, $href, $matches)) {
                                             return $matches[1];
                                         }
                                     }],
-                'ulink'   => ['.booksub a:first', 'href'],
-                'uname'   => ['.booksub a:first', 'text'],
-                'clink'   => ['.booksub a:last', 'href'],
-                'cname'   => ['.booksub a:last', 'text'],
-                'length'  => ['.booksub span', 'text'],
+                'ulink'   => ['.au-name a:first', 'href'],
+                'uname'   => ['.au-name a:first', 'text'],
+                'clink'   => ['.book-label a:last', 'href'],
+                'cname'   => ['.book-label a:last', 'text'],
+                'length'  => ['.book-info .nums span', 'text'],
                 'keyword' => ['.status .keyword a', 'text'],
                 'keyword-link' => ['.status .keyword a', 'href'],
                 'vote_info' => ['.vote_info p*', 'text', '', function($item){
@@ -120,23 +121,38 @@ return [
                     }, $list);
                 }],
                 
-                'desc'    => ['.info_con', 'text', '', function($v){return str_replace("\n", '', $v);}],
+                'desc'    => ['.book-dec', 'text', '', function($v){return str_replace("\n", '', $v);}],
             ],
         ],
-        // 'chapter' => [
-        //     'url' => function($id){return 'http://book.zongheng.com/showchapter/'.$id.'.html';},
-        //     'range' => '.booklist table td',
-        //     'roules' => [
-        //         //'tomename' => ['.booklist', 'tomename'],
-        //         'chapterid' => ['<tr>td', 'chapterid'],
-        //         'chaptername' => ['a', 'text'],
-        //     ]
-        // ],
         'chapter' => [
-            'url' => function($id){return 'http://book.zongheng.com/showchapter/'.$id.'.html';},
-            'range' => '.booklist td',
+            'url' => function($id){
+                return 'http://book.zongheng.com/showchapter/'.$id.'.html';
+                //return 'http://192.168.99.100:8888/'.$id.'.html';
+            },
+            'range' => '.volume-list>div',
             'roules' => [
-                'chaptername' => ['a', 'text'],
+                'volume' => [
+                    '.volume', 'text', '-a -em', function ($value){
+                        return StringUtility::trim($value);
+                    }
+                ],
+                'chapter-list' => [
+                    '.chapter-list a',
+                    [
+                        'chaptername' => 'text',
+                        'href' => 'href',
+                        'chapterid'   => 'href',
+                        'bookid'   => 'href',
+                    ], 
+                    '', 
+                    function($list) {
+                        return array_map(function($chapter){
+                            $chapter['chapterid'] = StringUtility::getZhonghengChapterIdByUrl($chapter['chapterid']);
+                            $chapter['bookid'] = StringUtility::getZhonghengBookIdByChapterUrl($chapter['bookid']);
+                            return $chapter;
+                        }, $list);
+                    }
+                ]
             ]
         ],
    ]

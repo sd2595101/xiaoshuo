@@ -25,3 +25,4 @@ Route::match(['get'], '/xiaoshuo/book/{bookid}.html', 'Xiaoshuo\BookController@i
 
 Route::match(['get'], '/xiaoshuo/chapter/{bookid}.html', 'Xiaoshuo\ChapterController@index');
 
+Route::match(['get'], '/xiaoshuo/chapter/{bookid}/{chapterid}.html', 'Xiaoshuo\ContentController@index');

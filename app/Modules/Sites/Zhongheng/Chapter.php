@@ -9,7 +9,6 @@ class Chapter implements BuilderInterface
     public function url($id)
     {
         return config('sites.zhongheng.chapter.url')($id);
-        return 'http://192.168.85.101/web/zhongheng-book-menu.html';
     }
 
     public function range()

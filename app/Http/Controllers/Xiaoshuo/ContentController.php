@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Xiaoshuo;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Modules\Crawler\Chapter\Director;
+use App\Modules\Crawler\Chapter\Director as ChapterDirector;
 use App\Modules\Sites\Zhongheng\Chapter;
 use App\Modules\Crawler\Book\Director as BookDirector;
 use App\Modules\Sites\Zhongheng\Book;
 
 
-class ChapterController extends Controller
+class ContentController extends Controller
 {
 
     /**
@@ -38,20 +38,20 @@ class ChapterController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function index($bookid)
+    public function index($bookid,$chapterid)
     {
-        $chapter = new Chapter();
-        $director = new Director($chapter);
-        $list = $director->build($bookid);
+//         $chapter = new Chapter();
+//         $director = new ChapterDirector($chapter);
+//         $list = $director->build($bookid);
         
-        $bookBuilder = new Book();
-        $bookDirector = new BookDirector($bookBuilder);
-        $info = $bookDirector->build($bookid);
-        //dump($list);
-        //dump($info);
-        return view('xiaoshuo.chapter', array(
-            'list' => $list,
-            'book' => $info[0],
-        ));
+//         $bookBuilder = new Book();
+//         $bookDirector = new BookDirector($bookBuilder);
+//         $info = $bookDirector->build($bookid);
+//         //dump($list);
+//         //dump($info);
+//         return view('xiaoshuo.chapter', array(
+//             'list' => $list,
+//             'book' => $info[0],
+//         ));
     }
 }
