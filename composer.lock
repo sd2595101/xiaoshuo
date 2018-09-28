@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c1a9809267df11d433417b98250fd035",
+    "content-hash": "d513dd2279b80fa4995648f1ab5fffd1",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -628,16 +628,16 @@
         },
         {
             "name": "jaeger/querylist",
-            "version": "4.0.4",
+            "version": "4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sd2595101/QueryList.git",
-                "reference": "dc3eb83d1eaaa8bb0b2469eabaace66136611fa0"
+                "reference": "a1337e32ec5ca0920ac889774ea87752c72d2427"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sd2595101/QueryList/zipball/dc3eb83d1eaaa8bb0b2469eabaace66136611fa0",
-                "reference": "dc3eb83d1eaaa8bb0b2469eabaace66136611fa0",
+                "url": "https://api.github.com/repos/sd2595101/QueryList/zipball/a1337e32ec5ca0920ac889774ea87752c72d2427",
+                "reference": "a1337e32ec5ca0920ac889774ea87752c72d2427",
                 "shasum": ""
             },
             "require": {
@@ -672,9 +672,9 @@
                 "spider"
             ],
             "support": {
-                "source": "https://github.com/sd2595101/QueryList/tree/master"
+                "source": "https://github.com/sd2595101/QueryList/tree/4.0.5"
             },
-            "time": "2018-09-27T03:31:45+00:00"
+            "time": "2018-09-28T06:20:19+00:00"
         },
         {
             "name": "jakub-onderka/php-console-color",
