@@ -44,3 +44,9 @@ blockquote, body, button, dd, dl, dt, embed, fieldset, form, h1, h2, h3, h4, h5,
 li, ol, ul {
     list-style: none;
 }
+
+.list-btn-area {
+    position: absolute;
+    top: .2em;
+    right:0px;
+}

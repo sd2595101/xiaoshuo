@@ -15,8 +15,6 @@
                     <span class="h1">
                         <a href="/xiaoshuo/book/{{$book['bookid']}}.html">{{$book['title']}}</a>
                     </span>
-                    <a href="/xiaoshuo/book/{{$book['bookid']}}.html" class="p-1 m-1 text-right text-info" >
-                        [ <i class="fab fa-readme"></i> 开始阅读 ] </a>
                 </div>
                 <div class="row">
                     <a href="{{$book['ulink']}}" class="p-1 font-weight-light" target="_blank">{{$book['uname']}}</a>
@@ -24,8 +22,18 @@
                     <a href="{{$book['clink']}}" class="p-1 font-weight-light" target="_blank">{{$book['cname']}}</a>
                     <span class="p-1 font-weight-light text-muted" style="font-size:14px"> | 关键字 : {{implode(' | ',$book['keyword'])}}</span>
                 </div>
-                <div class="description text-left text-light">
+                <div class="description text-left">
                     {{$book['desc']}}
+                </div>
+                <div class="list-btn-area">
+                    <div>
+                        <a href="/xiaoshuo/book/{{$book['bookid']}}.html" class="p-1 m-1 text-right text-danger" >
+                            [ <i class="fab fa-readme"></i> 查看书页 ] </a>
+                    </div>
+                    <div>
+                        <a href="/xiaoshuo/chapter/{{$book['bookid']}}.html" class="p-1 m-1 text-right text-danger" >
+                            [ <i class="fab fa-readme"></i> 最新章节 ] </a>
+                    </div>
                 </div>
             </div>
         </div>
