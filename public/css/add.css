@@ -1,0 +1,46 @@
+blockquote, body, button, dd, dl, dt, embed, fieldset, form, h1, h2, h3, h4, h5, h6, h7 input, li, object, ol, pre, table, td, th, ul {
+  font-family: PingFangSC-Regular,HelveticaNeue-Light,'Helvetica Neue Light','Microsoft YaHei',sans-serif,Simsun;
+}
+.center {
+    text-align: center;
+}
+.content p {
+	text-align:left;
+	letter-spacing: 1px;
+    line-height: 2em;
+    text-indent: 2em;
+    padding: .5em .3em;
+}
+.chapter-container {
+  clear:both;
+  overflow: auto;
+}
+.col-4 {
+    width: 30%;
+    float: left;
+    padding-right: 60px;
+}
+
+.chapter-list {
+    background: #fff;
+    overflow: hidden;
+    margin-bottom: 45px;
+    margin-top: 20px;
+}
+
+.chapter-list>* {
+    padding: 11px 0;
+    position: relative;
+    border-bottom: 1px #ccc dotted;
+}
+.chapter-list a {
+    float: left;
+    max-width: 80%;
+    line-height: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+li, ol, ul {
+    list-style: none;
+}

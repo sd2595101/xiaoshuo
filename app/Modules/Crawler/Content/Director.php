@@ -16,7 +16,7 @@ class Director
 	public function build($bookid, $chapterid)
 	{
 	    $key = __CLASS__.'::'.__FUNCTION__ .'::bookid::'.$bookid . '::chapterid::'.$chapterid;
-	    //Cache::forget($key);
+	    
 	    if (!Cache::has($key)) {
 	        Cache::forever($key, $this->rebuild($bookid, $chapterid));
 	    }

@@ -1,10 +1,7 @@
-<?php 
-$bodyClass = ' h100';
-$pageTitle = $book['title'] . '最新章节全文阅读,' . $book['title'].'无弹窗，' . $book['uname'].'的小说';
-?>
-@extends('layouts.xiaoshuo')
+@extends('layouts.app')
 
-@section('main')
+@section('content')
+
 <div class="container book">
     <div class="row">
       <div class="col-5 col-sm-4 col-md-3 col-lg-3 ">
@@ -42,6 +39,5 @@ $pageTitle = $book['title'] . '最新章节全文阅读,' . $book['title'].'无�
       </div>
     </div>
 </div>
-
 
 @endsection
