@@ -21,10 +21,7 @@ class Director
             Cache::forever($key, $this->rebuild($bookid));
         }
 
-        return Cache::get($key, function() use ($bookid) {
-                $res = $this->rebuild($bookid);
-                return $res;
-            });
+        return Cache::get($key);
     }
 
     private function rebuild($bookid)

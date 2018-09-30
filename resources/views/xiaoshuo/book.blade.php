@@ -17,7 +17,7 @@
             <span class="h1">
               <a href="/xiaoshuo/chapter/{{$book['bookid']}}.html">{{$book['title']}}</a>
             </span>
-            <a href="/xiaoshuo/chapter/{{$book['bookid']}}.html" class="p-1 m-1 text-right text-info" target="_blank">
+            <a href="/xiaoshuo/chapter/{{$book['bookid']}}.html" class="p-1 m-1 text-right text-info">
              [ <i class="fab fa-readme"></i> 章节列表 ] </a>
           </div>
           <div class="row">

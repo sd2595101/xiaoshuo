@@ -22,7 +22,6 @@ blockquote, body, button, dd, dl, dt, embed, fieldset, form, h1, h2, h3, h4, h5,
 }
 
 .chapter-list {
-    background: #fff;
     overflow: hidden;
     margin-bottom: 45px;
     margin-top: 20px;
@@ -31,7 +30,7 @@ blockquote, body, button, dd, dl, dt, embed, fieldset, form, h1, h2, h3, h4, h5,
 .chapter-list>* {
     padding: 11px 0;
     position: relative;
-    border-bottom: 1px #ccc dotted;
+    border-bottom: 1px #e2ad0f dotted;
 }
 .chapter-list a {
     float: left;
@@ -59,16 +58,17 @@ li, ol, ul {
     left: 9px;
     color: #aaa;
 }
-.navbar-brand>.fa {
-    color:#03f143;
+.index-box {
+    margin-top:60px;
 }
 .keyword-input {
     width:90%;
+    position: relative;
 }
 .keyword-input>.fa{
     position: absolute;
     top: .7rem;
-    left: 1.2rem;
+    left: .7rem;
     color: #aaa;
 }
 .keyword-input input {
@@ -88,3 +88,5 @@ li, ol, ul {
     -moz-appearance: textfield;
     appearance: textfield;
 }
+
+

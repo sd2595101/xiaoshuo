@@ -25,9 +25,9 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
     <link href="{{ asset('css/add.css') }}" rel="stylesheet">
   </head>
-  <body>
+  <body class="content-body">
     <div id="app">
-      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <nav class="navbar navbar-expand-md navbar-bravo bg-navbar-bravo">
         <div class="container">
           <a class="navbar-brand font-weight-bold" href="{{ url('/') }}">
             <i class="fa fa-coffee"></i>
@@ -83,7 +83,7 @@
         </div>
       </nav>
 
-      <main class="py-4">
+      <main class="py-4 content-body">
         @yield('content')
       </main>
     </div>
