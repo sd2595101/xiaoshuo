@@ -45,14 +45,14 @@ class ContentController extends Controller
     {
         $content = new Content();
         $director = new ContentDirector($content);
-        $info = $director->build($bookid, $chapterid);
-        
+        $contentData = $director->build($bookid, $chapterid);
+        //dump($contentData);exit;
         $bookBuilder = new Book();
         $bookDirector = new BookDirector($bookBuilder);
         $bookInfo = $bookDirector->build($bookid);
         //dump($bookInfo);exit;
         return view('xiaoshuo.content', array(
-            'info' => $info,
+            'info' => $contentData,
             'book' => $bookInfo[0] ?? [],
         ));
 

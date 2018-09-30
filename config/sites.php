@@ -210,6 +210,13 @@ return [
                         }
                     }
                 ],
+                'category_id' => ['.crumb a:last', 'href', '', function($href) {
+                    $pregPattern = "/category\/(\d+)\.html/";
+                    if (preg_match($pregPattern, $href, $matches)) {
+                        return $matches[ 1 ];
+                    }
+                }],
+                'category_name' => ['.crumb a:last', 'text'],
                 'ulink'        => [
                     '.au-name a:first',
                     'href'
@@ -309,6 +316,10 @@ return [
                     '.content p',
                     'texts'
                 ],
+                'volume' => ['.reader_crumb', 'html', '', function($item){
+                    $parts = explode('&gt;', $item);
+                    return trim(array_pop($parts));
+                }],
                 'title'   => ['.title_txtbox', 'text'],
                 'uname'   => ['.bookinfo a:first', 'text'],
                 'isvip'   => [

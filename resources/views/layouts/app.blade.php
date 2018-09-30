@@ -43,8 +43,8 @@
               <li></li>
               <li class="nav-item">
                 <form method="GET" action="{{ route('query') }}" class="form-header-search">
-                  <i class="fa fa-search"></i>
-                  <input type="text" name="q" class="form-control p1 header-search-input " value="{{ app('request')->input('q') }}" placeholder="请输入书名进行检索" />
+                  <i class="fa fa-book"></i>
+                  <input type="text" name="q" class="form-control p1 header-search-input " value="{{ app('request')->input('q') }}" placeholder="请输入关键字进行检索" />
                 </form>
               </li>
             </ul>
