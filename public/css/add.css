@@ -50,3 +50,41 @@ li, ol, ul {
     top: .2em;
     right:0px;
 }
+.form-header-search {
+    position: relative;
+}
+.form-header-search>.fa{
+    position: absolute;
+    top: 9px;
+    left: 9px;
+    color: #aaa;
+}
+.navbar-brand>.fa {
+    color:#03f143;
+}
+.keyword-input {
+    width:90%;
+}
+.keyword-input>.fa{
+    position: absolute;
+    top: .7rem;
+    left: 1.2rem;
+    color: #aaa;
+}
+.keyword-input input {
+    padding-left: 32px!important;
+}
+.header-search-input {
+    width: 100%;
+    height: 2rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: .9rem;
+    box-shadow: inset 0 1px 2px #ccc;
+    padding-left: 32px;
+    padding-right: 8px;
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
