@@ -1,11 +1,11 @@
 <?php
-
 namespace App\Http\Controllers\Xiaoshuo;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Modules\Crawler\Book\Director;
 use App\Modules\Sites\Zhongheng\Book;
+use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
@@ -24,7 +24,7 @@ class BookController extends Controller
      */
     public function __construct()
     {
-
+        
     }
 
     /**
@@ -41,6 +41,9 @@ class BookController extends Controller
         $director = new Director($builder);
         $info = $director->build($bookid);
         
-        return view('xiaoshuo.book', array('book' => $info[0]));
+        //$isLogin = !Auth::guest();
+        //dump($isLogin);
+
+        return view('xiaoshuo.book', array('book' => $info));
     }
 }

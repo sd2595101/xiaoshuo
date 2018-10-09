@@ -47,11 +47,9 @@ class ChapterController extends Controller
         $bookBuilder = new Book();
         $bookDirector = new BookDirector($bookBuilder);
         $info = $bookDirector->build($bookid);
-        //dump($list);
-        //dump($info);
         return view('xiaoshuo.chapter', array(
             'list' => $list,
-            'book' => $info[0],
+            'book' => $info,
         ));
     }
 }

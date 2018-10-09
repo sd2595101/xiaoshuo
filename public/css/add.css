@@ -89,4 +89,5 @@ li, ol, ul {
     appearance: textfield;
 }
 
+#gotop{ position:fixed;right:2rem;bottom:2rem;}
 

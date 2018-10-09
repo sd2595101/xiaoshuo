@@ -12,7 +12,17 @@ class Director
 	{
 		$this->builder = $builder;
 	}
-
+    public static function getCacheKey($bookid)
+    {
+        return __CLASS__.'::'. 'build' .'::bookid::'.$bookid;
+    }
+    
+    public static function getCache($bookid)
+    {
+        $key = self::getCacheKey($bookid);
+        
+        return Cache::get($key);
+    }
 	public function build($bookid)
 	{
 	    $key = __CLASS__.'::'.__FUNCTION__ .'::bookid::'.$bookid;
@@ -25,10 +35,12 @@ class Director
 	
 	public function rebuild($bookid)
 	{
-		return QueryList::get($this->builder->url($bookid))
+		$result =  QueryList::get($this->builder->url($bookid))
     			->range($this->builder->range())
     			->rules($this->builder->roules())
     			->query()
     			->getData();
+        $info = $result[0] ?? false;
+        return $info;
 	}
 }

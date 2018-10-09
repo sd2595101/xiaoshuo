@@ -12,36 +12,45 @@ class Director
 	{
 		$this->builder = $builder;
 	}
+    
+    public static function getCacheKey($bookid, $chapterid, $site = null)
+    {
+        return __CLASS__.'::'. 'build' .'::bookid::'.$bookid . '::chapterid::'.$chapterid . '::site::'.$site;
+    }
+    
+    public static function getCache($bookid, $chapterid, $site = null)
+    {
+        $key = self::getCacheKey($bookid, $chapterid, $site);
+        
+        return Cache::get($key);
+    }
 
-	public function build($bookid, $chapterid)
+	public function build($bookid, $chapterid, $site = null)
 	{
-	    $key = __CLASS__.'::'.__FUNCTION__ .'::bookid::'.$bookid . '::chapterid::'.$chapterid;
+	    $key = __CLASS__.'::'.__FUNCTION__ .'::bookid::'.$bookid . '::chapterid::'.$chapterid . '::site::'.$site;
 	    
 	    if (!Cache::has($key)) {
-	        Cache::forever($key, $this->rebuild($bookid, $chapterid));
+	        Cache::forever($key, $this->rebuild($bookid, $chapterid, $site));
 	    }
 	    
-	    return Cache::get($key);
+	    $result = Cache::get($key);
+        if (!isset($result['content'])) {
+            Cache::forget($key);
+        }
+        return $result;
 	}
 	
-	private function rebuild($bookid, $chapterid)
+	private function rebuild($bookid, $chapterid, $site = null)
 	{
-	    $result = QueryList::get($this->builder->url($bookid, $chapterid))
+        $url = $this->builder->url($bookid, $chapterid);
+        //dump($url);
+        $ql = QueryList::getInstance()->get($url);
+	    $result = $ql
         	    ->rules($this->builder->roules())
         	    ->query()
-        	    ->getData(function($data){
-        	        return $data;
-        	    });
-        $info = $result[0] ?? false;
-        $isVip = $info['isvip'] ?? false;
-        if ($isVip) {
-            $info = $this->buildByOtherSite($info);
-        }
+        	    ->getData();
+        
+        $info = $result[0] ?? $result;
         return $info;
-	}
-	
-	private function buildByOtherSite($info)
-	{
-	    return $info;
 	}
 }

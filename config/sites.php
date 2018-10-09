@@ -32,35 +32,35 @@ return [
         'book_top'  => 'http://book.zongheng.com/book/{bookid}.html',
         'book_menu' => 'http://book.zongheng.com/showchapter/{bookid}.html',
         'category'  => [
-                [
+            [
                 'http://www.zongheng.com/mianfei/',
                 '免费小说'
             ],
-                [
+            [
                 'http://www.zongheng.com/category/1.html',
                 '奇幻·玄幻'
             ],
-                [
+            [
                 'http://www.zongheng.com/category/3.html',
                 '武侠·仙侠'
             ],
-                [
+            [
                 'http://www.zongheng.com/category/6.html',
                 '历史·军事'
             ],
-                [
+            [
                 'http://www.zongheng.com/category/9.html',
                 '都市·娱乐'
             ],
-                [
+            [
                 'http://www.zongheng.com/category/21.html',
                 '竞技·同人'
             ],
-                [
+            [
                 'http://www.zongheng.com/category/15.html',
                 '科幻·游戏'
             ],
-                [
+            [
                 'http://www.zongheng.com/category/18.html',
                 '悬疑·灵异'
             ]
@@ -71,43 +71,43 @@ return [
             ]
         ],
         'store'     => [
-                [
+            [
                 'http://book.zongheng.com/store/c0/c0/b0/u12/p1/v9/s9/t0/ALL.html',
                 '全部作品'
             ],
-                [
+            [
                 'http://book.zongheng.com/store/c1/c0/b0/u12/p1/v9/s9/t0/ALL.html',
                 '奇幻玄幻'
             ],
-                [
+            [
                 'http://book.zongheng.com/store/c3/c0/b0/u12/p1/v9/s9/t0/ALL.html',
                 '武侠仙侠'
             ],
-                [
+            [
                 'http://book.zongheng.com/store/c6/c0/b0/u12/p1/v9/s9/t0/ALL.html',
                 '历史军事'
             ],
-                [
+            [
                 'http://book.zongheng.com/store/c9/c0/b0/u12/p1/v9/s9/t0/ALL.html',
                 '都市娱乐'
             ],
-                [
+            [
                 'http://book.zongheng.com/store/c15/c0/b0/u12/p1/v9/s9/t0/ALL.html',
                 '科幻游戏'
             ],
-                [
+            [
                 'http://book.zongheng.com/store/c18/c0/b0/u12/p1/v9/s9/t0/ALL.html',
                 '悬疑灵异'
             ],
-                [
+            [
                 'http://book.zongheng.com/store/c21/c0/b0/u12/p1/v9/s9/t0/ALL.html',
                 '竞技同人'
             ],
-                [
+            [
                 'http://book.zongheng.com/store/c24/c0/b0/u12/p1/v9/s9/t0/ALL.html',
                 '评论文集'
             ],
-                [
+            [
                 'http://book.zongheng.com/store/c40/c0/b0/u12/p1/v9/s9/t0/ALL.html',
                 '二次元'
             ]
@@ -211,41 +211,41 @@ return [
                     }
                 ],
                 'category_id' => ['.crumb a:last', 'href', '', function($href) {
-                    $pregPattern = "/category\/(\d+)\.html/";
-                    if (preg_match($pregPattern, $href, $matches)) {
-                        return $matches[ 1 ];
-                    }
-                }],
+                        $pregPattern = "/category\/(\d+)\.html/";
+                        if (preg_match($pregPattern, $href, $matches)) {
+                            return $matches[ 1 ];
+                        }
+                    }],
                 'category_name' => ['.crumb a:last', 'text'],
-                'ulink'        => [
+                'ulink'         => [
                     '.au-name a:first',
                     'href'
                 ],
-                'uname'        => [
+                'uname'         => [
                     '.au-name a:first',
                     'text'
                 ],
-                'clink'        => [
+                'clink'         => [
                     '.book-label a:last',
                     'href'
                 ],
-                'cname'        => [
+                'cname'         => [
                     '.book-label a:last',
                     'text'
                 ],
-                'length'       => [
+                'length'        => [
                     '.book-info .nums span',
                     'texts'
                 ],
-                'keyword'      => [
+                'keyword'       => [
                     '.status .keyword a',
                     'text'
                 ],
-                'keyword-link' => [
+                'keyword-link'  => [
                     '.status .keyword a',
                     'href'
                 ],
-                'vote_info'    => [
+                'vote_info'     => [
                     '.vote_info p*',
                     'text',
                     '',
@@ -299,8 +299,9 @@ return [
                     '',
                     function ($list) {
                         return array_map(function ($chapter) {
-                                $chapter[ 'chapterid' ] = StringUtility::getZhonghengChapterIdByUrl($chapter[ 'chapterid' ]??'');
-                                $chapter[ 'bookid' ] = StringUtility::getZhonghengBookIdByChapterUrl($chapter[ 'bookid' ]??'');
+                                $chapter[ 'chapterid' ] = StringUtility::getZhonghengChapterIdByUrl($chapter[ 'chapterid' ] ?? '');
+                                $chapter[ 'bookid' ] = StringUtility::getZhonghengBookIdByChapterUrl($chapter[ 'bookid' ] ?? '');
+                                $chapter[ 'chaptername' ] = StringUtility::standardizationChapterTitle($chapter[ 'chaptername' ] ?? '');
                                 return $chapter;
                             }, $list);
                     }
@@ -316,10 +317,10 @@ return [
                     '.content p',
                     'texts'
                 ],
-                'volume' => ['.reader_crumb', 'html', '', function($item){
-                    $parts = explode('&gt;', $item);
-                    return trim(array_pop($parts));
-                }],
+                'volume'  => ['.reader_crumb', 'html', '', function($item) {
+                        $parts = explode('&gt;', $item);
+                        return trim(array_pop($parts));
+                    }],
                 'title'   => ['.title_txtbox', 'text'],
                 'uname'   => ['.bookinfo a:first', 'text'],
                 'isvip'   => [
@@ -327,6 +328,40 @@ return [
                     'exists',
                 ]
             ]
-        ]
-    ]
+        ],
+        
+    ],
+    '76wx' => [
+        'url'     => 'http://www.76wx.com',
+        'content' => [
+            'roules' => [
+                'content'     => [
+                    '#content',
+                    'html',
+//                    '-script',
+                    '',
+                    function($html) {
+                        $html = StringUtility::convertEncoding($html);
+                        //dump($html);exit;
+                        $doc = phpQuery::newDocumentHTML($html);
+                        $tags = ['div','script'];
+                        foreach ($tags as $tag) {
+                            pq($doc)->find($tag)->remove();
+                        }
+                        $html = pq($doc)->htmlOuter();
+                        $html = trim($html, "\r\n ");
+                        $html = str_replace('顶 点 小 说 x 23 u s．c om', '', $html);
+                        
+                        $ps = explode('<br><br>', $html);
+                        $ps = array_map(function($pOne){
+                            return StringUtility::trim($pOne);
+                        }, $ps);
+                        return $ps;
+                    }
+                ],
+                'title'       => ['.bookname>h1', 'text'],
+                'chapterlist' => ['.bottem1 a(1)', 'href'],
+            ]
+        ],
+    ],
 ];
