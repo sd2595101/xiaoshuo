@@ -68,6 +68,12 @@ class StringUtility
         if (count($test) != 2) {
             $test = explode('　', $title, 2);
         }
+        if (count($test) != 2) {
+            $test = explode('：', $title, 2);
+        }
+        if (count($test) != 2) {
+            $test = explode('、', $title, 2);
+        }
         $trim = array_map('trim', $test);
         $res = implode(' ', $trim);
         return $res;

@@ -58,6 +58,12 @@ li, ol, ul {
     left: 9px;
     color: #aaa;
 }
+.form-header-search>.glyphicon{
+    position: absolute;
+    top: 9px;
+    left: 9px;
+    color: #aaa;
+}
 .index-box {
     margin-top:60px;
 }

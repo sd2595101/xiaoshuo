@@ -17,6 +17,7 @@ class Director
     public function build($bookid)
     {
         $key = __CLASS__ . '::' . __FUNCTION__ . '::bookid::' . $bookid;
+        //Cache::forget($key);
         if (!Cache::has($key)) {
             Cache::forever($key, $this->rebuild($bookid));
         }
@@ -27,8 +28,8 @@ class Director
     private function rebuild($bookid)
     {
         $result = QueryList::get($this->builder->url($bookid))
-            ->range($this->builder->range())
             ->rules($this->builder->roules())
+            ->range($this->builder->range())
             ->query()
             ->getData(function($data) {
             return $data;

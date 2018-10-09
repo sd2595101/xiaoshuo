@@ -5,7 +5,7 @@
 <div class="container">
   <nav aria-label="breadcrumb-bravo">
     <ol class="breadcrumb-bravo">
-      <li class="breadcrumb-item-bravo"><a href="#"><i class="fa fa-coffee"></i></a></li>
+      <li class="breadcrumb-item-bravo"><a href="/"><span class="glyphicon glyphicon-globe"></span></a></li>
       <li class="breadcrumb-item-bravo"><a href="/query?q={{$book['category_name']}}" target="_blank">{{$book['category_name']}}</a></li>
       <li class="breadcrumb-item-bravo"><a href="{{route('book', $book['bookid'])}}">{{$book['title']}}</a></li>
       <li class="breadcrumb-item-bravo active">最新章节</li>
@@ -28,9 +28,16 @@
     </div>
     <ul class="chapter-list">
       @foreach ($group['chapter-list'] as $chapter)
-      <li class="col-4">
+      <?php 
+          $chapterId = $chapter['chapterid'];
+          $isVip = in_array($chapterId, $group['chapter-list-vip']);
+      ?>
+      <li class="col-4 {{ $isVip ? 'vip' : '' }}">
+        
         <a href="/xiaoshuo/chapter/{{$book['bookid']}}/{{$chapter['chapterid']}}.html">
-          {{$chapter['chaptername']}}
+          @if ($isVip ==true)
+        <span class="glyphicon glyphicon-star"></span>
+        @endif{{$chapter['chaptername']}}
         </a>
       </li>
       @endforeach

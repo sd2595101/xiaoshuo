@@ -28,11 +28,11 @@
                 <div class="list-btn-area">
                     <div>
                         <a href="/xiaoshuo/book/{{$book['bookid']}}.html" class="p-1 m-1 text-right text-danger" >
-                            [ <i class="fab fa-readme"></i> 查看书页 ] </a>
+                            [ <span class="fa glyphicon glyphicon-book"></span> 查看书页 ] </a>
                     </div>
                     <div>
                         <a href="/xiaoshuo/chapter/{{$book['bookid']}}.html" class="p-1 m-1 text-right text-danger" >
-                            [ <i class="fab fa-readme"></i> 最新章节 ] </a>
+                            [ <span class="fa glyphicon glyphicon-list"></span> 最新章节 ] </a>
                     </div>
                 </div>
             </div>

@@ -42,9 +42,11 @@ class Content implements BuilderInterface
             }
         );
         // get the book url
-        $url = $q[ 0 ];
+        $url = $q[ 0 ] ?? null;
         if (!$url) {
-            return;
+            dump($queryurl);
+            dump($q);
+            throw new \Exception('error : search book url from sodu.');
         }
         // find the book chapter-list url
         $q2 = Cache::get($url, function() use ($url){
@@ -66,32 +68,37 @@ class Content implements BuilderInterface
         
         $sites = ['27', '21'];
         $contentUrl = false;
-        
+        $menuurl = null;
         for ($site = 0; $site < 10; $site ++) {
-            
+            //dump($menuurl);
             $menuurl = $q2[ 0 ][ 'links' ][ $site ][ 'href' ] ?? false;
             
             //Cache::forget($menuurl);
-            $q3 = Cache::get($menuurl, function() use ($menuurl) {
-                sleep(1);
-                $q3 = QueryList::getInstance()
-                ->get($menuurl)
-                ->rules([
-                    'chapterlist' => ['td>a', ['href' => 'href','text' => 'text']],
-                ])
-                ->range('table')
-                ->query()
-                ->getData(function($e) {
-                    $e['chapterlist'] = array_map(function($one){
-                        $parts = explode('chapterurl=', $one['href'] ?? '');
-                        $one['href'] = array_pop($parts);
-                        return $one;
-                    }, $e['chapterlist'] ?? []);
-                    return $e;
+            try {
+                $q3 = Cache::get($menuurl, function() use ($menuurl) {
+                    sleep(1);
+                    $q3 = QueryList::getInstance()
+                    ->get($menuurl)
+                    ->rules([
+                        'chapterlist' => ['td>a', ['href' => 'href','text' => 'text']],
+                    ])
+                    ->range('table')
+                    ->query()
+                    ->getData(function($e) {
+                        $e['chapterlist'] = array_map(function($one){
+                            $parts = explode('chapterurl=', $one['href'] ?? '');
+                            $one['href'] = array_pop($parts);
+                            return $one;
+                        }, $e['chapterlist'] ?? []);
+                        return $e;
+                    });
+                    Cache::forever($menuurl, $q3);
+                    return $q3;
                 });
-                Cache::forever($menuurl, $q3);
-                return $q3;
-            });
+            } catch (\Exception $ex) {
+                dump($menuurl);
+                continue;
+            }
             
             $chapterlist = $q3[3]['chapterlist'];
             foreach ($chapterlist as $chapterlink) {
@@ -105,9 +112,9 @@ class Content implements BuilderInterface
             }
         }
         if (!$contentUrl) {
-            dump($chapterlist);
-            dump($chapter['title']);
-            dump($menuurl);
+//            dump($chapterlist);
+//            dump($chapter['title']);
+//            dump($menuurl);
             throw new \Exception('error : search content url from sodu.');
         }
         //$contentUrl = 'http://192.168.56.101/test.html';

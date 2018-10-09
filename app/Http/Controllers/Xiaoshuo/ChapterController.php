@@ -43,7 +43,7 @@ class ChapterController extends Controller
         $chapter = new Chapter();
         $director = new Director($chapter);
         $list = $director->build($bookid);
-        
+        //dump($list);
         $bookBuilder = new Book();
         $bookDirector = new BookDirector($bookBuilder);
         $info = $bookDirector->build($bookid);

@@ -14,15 +14,16 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
+    <!--
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-
+    -->
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">-->
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">-->
     <link href="{{ asset('css/add.css') }}" rel="stylesheet">
   </head>
   <body class="content-body">
@@ -30,7 +31,7 @@
       <nav class="navbar navbar-expand-md navbar-bravo bg-navbar-bravo">
         <div class="container">
           <a class="navbar-brand font-weight-bold" href="{{ url('/') }}">
-            <i class="fa fa-coffee"></i>
+            <span class="glyphicon glyphicon-globe"></span>
             {{ config('app.name', 'Laravel') }}
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -43,7 +44,8 @@
               <li></li>
               <li class="nav-item">
                 <form method="GET" action="{{ route('query') }}" class="form-header-search">
-                  <i class="fa fa-book"></i>
+                  <!--<i class="fa fa-book"></i>-->
+                  <span class="glyphicon glyphicon-search"></span>
                   <input type="text" name="q" class="form-control p1 header-search-input " value="{{ app('request')->input('q') }}" placeholder="请输入关键字进行检索" />
                 </form>
               </li>

@@ -305,6 +305,20 @@ return [
                                 return $chapter;
                             }, $list);
                     }
+                ],
+                'chapter-list-vip' => [
+                    '.chapter-list li.vip a', [
+                        'chapterid'   => 'href',
+                        'chaptername' => 'text',
+                    ],
+                    '',
+                    function ($list) {
+                        $result = array();
+                        array_map(function ($chapter) use (&$result) {
+                            $result[] = StringUtility::getZhonghengChapterIdByUrl($chapter[ 'chapterid' ] ?? '');
+                        }, $list);
+                        return $result;
+                    }
                 ]
             ]
         ],

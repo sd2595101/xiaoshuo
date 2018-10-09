@@ -50,11 +50,15 @@ class ContentController extends Controller
         $contentData = $director->build($bookid, $chapterid);
         
         if ($contentData['isvip']) {
-            $content = new OtherContent();
-            $director = new ContentDirector($content);
-            $contentData2 = $director->build($bookid, $chapterid, 'other2');
-            $newContent = $contentData2['content'] ?? ['更新失败,请稍后再试'];
-            $contentData['content'] = $newContent;
+            try {
+                $content = new OtherContent();
+                $director = new ContentDirector($content);
+                $contentData2 = $director->build($bookid, $chapterid, 'other2');
+                $newContent = $contentData2['content'] ?? ['更新失败,请稍后再试'];
+                $contentData['content'] = $newContent;
+            } catch (\Exception $ex) {
+                $contentData['content'] = ['TODO', $ex->getMessage()];
+            }
         }
         
         $bookBuilder = new Book();
