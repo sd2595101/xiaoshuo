@@ -45,7 +45,7 @@
                 <form method="GET" action="{{ route('query') }}" class="form-header-search">
                   <!--<i class="fa fa-book"></i>-->
                   <span class="glyphicon glyphicon-search"></span>
-                  <input type="text" name="q" class="form-control p1 header-search-input " value="{{ app('request')->input('q') }}" placeholder="请关键字进行检索" />
+                  <input type="text" name="q" class="form-control p1 header-search-input " value="{{ app('request')->input('q') }}" placeholder="请输入关键字搜书" />
                 </form>
               </li>
             </ul>

@@ -8,7 +8,7 @@
                 <div class="keyword-input">
                     <i class="fa fa-search"></i>
                     <span class="fa glyphicon glyphicon-search"></span>
-                    <input type="text" name="q" value="" class="form-control p-2" autofocus="true" placeholder="请输入书名进行检索" />
+                    <input type="text" name="q" value="" class="form-control p-2" autofocus="true" placeholder="请输入关键字搜书" />
                 </div>
             </div>
         </form>
