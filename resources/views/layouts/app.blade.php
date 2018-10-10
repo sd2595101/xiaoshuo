@@ -31,8 +31,7 @@
       <nav class="navbar navbar-expand-md navbar-bravo bg-navbar-bravo">
         <div class="container">
           <a class="navbar-brand font-weight-bold" href="{{ url('/') }}">
-            <span class="glyphicon glyphicon-globe"></span>
-            {{ config('app.name', 'Laravel') }}
+            <image src="/images/logo.png" alt="{{ config('app.name', 'Laravel') }}" style="height:2rem;" />
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
@@ -46,7 +45,7 @@
                 <form method="GET" action="{{ route('query') }}" class="form-header-search">
                   <!--<i class="fa fa-book"></i>-->
                   <span class="glyphicon glyphicon-search"></span>
-                  <input type="text" name="q" class="form-control p1 header-search-input " value="{{ app('request')->input('q') }}" placeholder="请输入关键字进行检索" />
+                  <input type="text" name="q" class="form-control p1 header-search-input " value="{{ app('request')->input('q') }}" placeholder="请关键字进行检索" />
                 </form>
               </li>
             </ul>

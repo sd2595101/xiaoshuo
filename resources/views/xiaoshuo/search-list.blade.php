@@ -32,7 +32,7 @@
                     </div>
                     <div>
                         <a href="/xiaoshuo/chapter/{{$book['bookid']}}.html" class="p-1 m-1 text-right text-danger" >
-                            [ <span class="fa glyphicon glyphicon-list"></span> 最新章节 ] </a>
+                            [ <span class="fa glyphicon glyphicon-list"></span> 章节目录 ] </a>
                     </div>
                 </div>
             </div>

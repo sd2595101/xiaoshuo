@@ -83,7 +83,7 @@
 }
 
 .breadcrumb-item-bravo + .breadcrumb-item-bravo:hover::before {
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 .breadcrumb-item + .breadcrumb-item:hover::before {
@@ -92,4 +92,12 @@
 
 .breadcrumb-item.active {
     color: #6c757d;
+}
+
+.breadcrumb-item-bravo a {
+    color: #32465a;
+}
+
+.breadcrumb-item-bravo a:hover {
+    color: #466f98;
 }

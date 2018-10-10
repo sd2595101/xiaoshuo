@@ -18,7 +18,7 @@
               <a href="/xiaoshuo/chapter/{{$book['bookid']}}.html">{{$book['title']}}</a>
             </span>
             <a href="/xiaoshuo/chapter/{{$book['bookid']}}.html" class="p-1 m-1 text-right text-info">
-             [ <i class="fab fa-readme"></i> 章节列表 ] </a>
+             [ <span class="fa glyphicon glyphicon-list"></span> 章节目录 ] </a>
           </div>
           <div class="row">
             <a href="{{$book['ulink']}}" class="p-1 font-weight-light" target="_blank">{{$book['uname']}}</a>
