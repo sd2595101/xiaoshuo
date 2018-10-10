@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container-fluid ">
     <div class="row justify-content-center index-box">
         <form name="f-search" action="/query" method="get" class="col-md-10">
             <div class="form-row">

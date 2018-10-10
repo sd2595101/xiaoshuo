@@ -350,7 +350,7 @@ return [
         'content' => [
             'roules' => [
                 'content'     => [
-                    '#content',
+                    '#content, #contents, #BookText',
                     'html',
 //                    '-script',
                     '',

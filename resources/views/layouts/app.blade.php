@@ -29,7 +29,7 @@
   <body class="content-body">
     <div id="app">
       <nav class="navbar navbar-expand-md navbar-bravo bg-navbar-bravo">
-        <div class="container">
+        <div class="container-fluid ">
           <a class="navbar-brand font-weight-bold" href="{{ url('/') }}">
             <image src="/images/logo.png" alt="{{ config('app.name', 'Laravel') }}" style="height:2rem;" />
           </a>

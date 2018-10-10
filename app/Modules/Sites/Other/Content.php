@@ -7,6 +7,7 @@ use QL\QueryList;
 use App\Modules\Crawler\Book\Director as BookDirector;
 use App\Modules\Crawler\Content\Director as ContentDirector;
 use App\Modules\Utility\StringUtility;
+use App\Modules\Utility\AI;
 
 class Content implements BuilderInterface
 {
@@ -96,6 +97,7 @@ class Content implements BuilderInterface
                     return $q3;
                 });
             } catch (\Exception $ex) {
+                echo $ex;
                 dump($menuurl);
                 continue;
             }
@@ -110,13 +112,36 @@ class Content implements BuilderInterface
             if ($contentUrl !== false) {
                 break;
             }
+            
+            // if un maching the chapter name
+            // go to the first chapter page and find chapter list
+            $anyContentUrl = $q3[3]['chapterlist'][0]['href'] ?? '';
+            
+            if (!$anyContentUrl) {
+                break;
+            }
+            //dump($anyContentUrl);
+            try {
+                $contentHtml = QueryList::getInstance()->get($anyContentUrl)->getHtml();
+                sleep(1);
+                $clurl = AI::findChapterListUrl($contentHtml, $anyContentUrl);
+                //dump($clurl);exit;
+                $clHtml = QueryList::getInstance()->get($clurl)->getHtml();
+                $contentUrl = AI::findContentUrl($clHtml, $chapter['title'], $clurl);
+                //dump($contentUrl);
+                if ($contentUrl) {
+                    return $contentUrl;
+                }
+                
+            } catch (\Exception $ex) {
+                //dump($ex);
+                break;
+            }
         }
         if (!$contentUrl) {
-//            dump($chapterlist);
-//            dump($chapter['title']);
-//            dump($menuurl);
             throw new \Exception('error : search content url from sodu.');
         }
+        dump($contentUrl);
         //$contentUrl = 'http://192.168.56.101/test.html';
         //dump($contentUrl);
         return $contentUrl;
