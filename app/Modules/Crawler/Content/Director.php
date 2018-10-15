@@ -24,6 +24,13 @@ class Director
         
         return Cache::get($key);
     }
+    
+    public static function clearCache($bookid, $chapterid, $site)
+    {
+        $key = self::getCacheKey($bookid, $chapterid, $site);
+        Cache::forget($key);
+    }
+    
 
 	public function build($bookid, $chapterid, $site = null)
 	{
@@ -51,6 +58,7 @@ class Director
         	    ->getData();
         
         $info = $result[0] ?? $result;
+        $info['original_url'] = $url;
         return $info;
 	}
 }

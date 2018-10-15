@@ -10,6 +10,16 @@ class AI
 {
     const INTERNAL_ENCODING = 'UTF-8';
     
+    const SKIP_SITE = [
+        'www.liaoshu.net',
+    ];
+    
+    public static function isNGSite($url)
+    {
+        $host = self::parseUrl($url, PHP_URL_HOST);
+        return in_array($host, self::SKIP_SITE);
+    }
+    
     public static function getChapterListNeedle()
     {
         return [
@@ -70,23 +80,47 @@ class AI
     public static function findContentUrl($chapterListHtml, $chapterTitle, $url)
     {
         $base = self::getUrlBase($url);
-        $allLinks = self::findAllSiteLinks($chapterListHtml);
+        $allLinks = self::findAllSiteLinks($chapterListHtml, $url);
         Log::info('chapter list all links:');
         Log::info($allLinks);
         foreach ($allLinks as $title => $href) {
             if (StringUtility::standardizationChapterTitle($title) == $chapterTitle) {
-                $parses = self::parseUrl($href, null);
-                if (isset($parses['scheme'])) {
-                    return $href;
-                } else if (substr($href, 0, 1) == '/') {
-                    return $base . $href;
-                }
-                return $url . $href;
+                return self::makeAbsolutePath($href, $url);
             }
         }
         return false;
     }
-    public static function findAllSiteLinks($html)
+    
+    public static function findContentUrlByLinks($chapterTitle, $allLinks)
+    {
+        foreach ($allLinks as $title => $href) {
+            if (StringUtility::standardizationChapterTitle($title) == $chapterTitle) {
+                return $href;
+            }
+        }
+        return false;
+    }
+    
+    public static function makeAbsolutePath($href, $pageUrl)
+    {
+        $base = self::getUrlBase($pageUrl);
+        $path = self::parseUrl($pageUrl, PHP_URL_PATH);
+        if (substr($path, -1) != '/') {
+            $path = dirname($path);
+        }
+        
+        $parses = self::parseUrl($href, null);
+        if (isset($parses['scheme'])) {
+            return $href;
+        } else if (substr($href, 0, 1) == '/') {
+            return rtrim($base, '/') . $href;
+        }
+        
+        $raw = rtrim($base, '/') . '/' . trim($path, '/') . '/' . $href;
+        
+        return str_replace('//', '/', $raw);
+    }
+    public static function findAllSiteLinks($html, $pageUrl = null)
     {
         
         $pqObj = phpQuery::newDocumentHTML($html);
@@ -112,6 +146,11 @@ class AI
             $links[$text] = $href;
             //$links[$href] = $text;
         });
+        if (!is_null($pageUrl)) {
+            foreach ($links as $key => $val) {
+                $links[$key] = self::makeAbsolutePath($val, $pageUrl);
+            }
+        }
         return $links;
     }
     

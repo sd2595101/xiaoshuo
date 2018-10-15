@@ -56,7 +56,13 @@ class ContentController extends Controller
                 $director = new ContentDirector($content);
                 $contentData2 = $director->build($bookid, $chapterid, 'other2');
                 $newContent = $contentData2['content'] ?? ['更新失败,请稍后再试'];
+                $newOriginUrl = $contentData2['original_url'] ?? '';
+                $check = implode('',$contentData2['content'] ?? []);
+                if ($check == "") {
+                    ContentDirector::clearCache($bookid, $chapterid, 'other2');
+                }
                 $contentData['content'] = $newContent;
+                $contentData['original_url'] = $newOriginUrl;
             } catch (\Exception $ex) {
                 $contentData['content'] = ['TODO', $ex->getMessage()];
             }

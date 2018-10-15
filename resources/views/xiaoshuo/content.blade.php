@@ -28,6 +28,7 @@
             <p>{{$content}}</p>
             @endforeach
         </div>
+        yuan: {{$info['original_url']}}
     </div>
     <div class="chapter_opbox chapter_opbox_bottom center">
       <a href="{{route('chapter', $book['bookid'])}}" class="gochapter"><span class="glyphicon glyphicon-list"></span> 目录</a>
