@@ -34,8 +34,6 @@ class Content implements BuilderInterface
                 }
             }
             return $url;
-            dump('research:'.$url);
-            exit;
         }
         return $this->getContentUrl($bookid, $chapterid);
     }

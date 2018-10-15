@@ -355,7 +355,8 @@ return [
 //                    '-script',
                     '',
                     function($html) {
-                        $html = StringUtility::convertEncoding($html);
+                        
+                        //$html = StringUtility::convertEncoding($html);
                         //dump($html);exit;
                         $doc = phpQuery::newDocumentHTML($html);
                         $tags = ['div','script'];
@@ -370,6 +371,7 @@ return [
                         $ps = array_map(function($pOne){
                             return StringUtility::trim($pOne);
                         }, $ps);
+                        
                         return $ps;
                     }
                 ],
