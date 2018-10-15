@@ -19,7 +19,7 @@ class Director
         $key = __CLASS__ . '::' . __FUNCTION__ . '::bookid::' . $bookid;
         //Cache::forget($key);
         if (!Cache::has($key)) {
-            Cache::forever($key, $this->rebuild($bookid));
+            Cache::set($key, $this->rebuild($bookid), 60 * 12);
         }
 
         return Cache::get($key);

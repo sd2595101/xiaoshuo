@@ -14,6 +14,7 @@ use App\Modules\Sites\Zhongheng\Content as ZhonghengContent;
 
 use App\Modules\Sites\Other\Content as OtherContent;
 
+use App\Modules\Utility\NovelUtility;
 
 class ContentController extends Controller
 {
@@ -65,9 +66,19 @@ class ContentController extends Controller
         $bookDirector = new BookDirector($bookBuilder);
         $bookInfo = $bookDirector->build($bookid);
         
+        $chapter = new Chapter();
+        $director = new ChapterDirector($chapter);
+        $list = $director->build($bookid);
+        $chapters = NovelUtility::convertZHChaptersVolumeMerge($list);
+        
+        $page = $chapters[$chapterid] ?? '';
+        //dump($chapters);
+        
         return view('xiaoshuo.content', array(
             'info' => $contentData,
             'book' => $bookInfo[0] ?? $bookInfo,
+            'prev' => $page['prev'] ? $page['prev'] . '.html' : '',
+            'next' => $page['next'] ? $page['next'] . '.html' : '',
         ));
 
         

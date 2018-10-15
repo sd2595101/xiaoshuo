@@ -8,18 +8,21 @@ use App\Modules\Crawler\Book\Director as BookDirector;
 use App\Modules\Crawler\Content\Director as ContentDirector;
 use App\Modules\Utility\StringUtility;
 use App\Modules\Utility\AI;
+use Illuminate\Support\Facades\Log;
 
 class Content implements BuilderInterface
 {
 
     public function url($bookid, $chapterid)
     {
+        Log::info('start ' . __CLASS__ . '::' . __METHOD__);
         $book = BookDirector::getCache($bookid);
         $chapter = ContentDirector::getCache($bookid, $chapterid);
         $title = trim($book[ 'title' ]);
         $chapter['title'] = StringUtility::standardizationChapterTitle($chapter['title']);
         // search by book name for sodu.cc
         $queryurl = 'http://www.sodu.cc/result.html?searchstr=' . \urlencode($title);
+        Log::info('sodu query url:' . $queryurl);
         $q = Cache::get($queryurl, function() use ($queryurl, $title) {
                 sleep(1);
                 $q = QueryList::getInstance()
@@ -38,6 +41,7 @@ class Content implements BuilderInterface
                         return false;
                     }
                 );
+                Log::info('cached ' . $queryurl);
                 Cache::forever($queryurl, $q);
                 return $q;
             }
@@ -47,6 +51,7 @@ class Content implements BuilderInterface
         if (!$url) {
             dump($queryurl);
             dump($q);
+            Log::warn('search book url from sodu.');
             throw new \Exception('error : search book url from sodu.');
         }
         // find the book chapter-list url
@@ -63,17 +68,17 @@ class Content implements BuilderInterface
                 ])
                 ->query()
                 ->getData();
+            Log::info('cached ' . $url);
             Cache::forever($url, $q2);
             return $q2;
         });
         
-        $sites = ['27', '21'];
         $contentUrl = false;
         $menuurl = null;
         for ($site = 0; $site < 10; $site ++) {
             //dump($menuurl);
             $menuurl = $q2[ 0 ][ 'links' ][ $site ][ 'href' ] ?? false;
-            
+            Log::info('find for menu url : ' . $menuurl);
             //Cache::forget($menuurl);
             try {
                 $q3 = Cache::get($menuurl, function() use ($menuurl) {
@@ -93,6 +98,9 @@ class Content implements BuilderInterface
                         }, $e['chapterlist'] ?? []);
                         return $e;
                     });
+                    Log::info('cached url : ' . $menuurl);
+                    Log::info('cached content : ');
+                    //Log::info($q3->all());
                     Cache::forever($menuurl, $q3);
                     return $q3;
                 });
@@ -103,47 +111,60 @@ class Content implements BuilderInterface
             }
             
             $chapterlist = $q3[3]['chapterlist'];
+            Log::debug('chapterlist:');
+            //Log::debug($chapterlist);
             foreach ($chapterlist as $chapterlink) {
                 if (StringUtility::standardizationChapterTitle($chapterlink['text']) == $chapter['title']) {
+                    Log::info('fixed url ' . $chapterlink['href']);
                     $contentUrl = $chapterlink['href'];
                     break;
                 }
             }
             if ($contentUrl !== false) {
+                Log::info('break');
                 break;
             }
             
             // if un maching the chapter name
             // go to the first chapter page and find chapter list
             $anyContentUrl = $q3[3]['chapterlist'][0]['href'] ?? '';
-            
+            Log::info('any content url:' . $anyContentUrl);
             if (!$anyContentUrl) {
+                Log::info('any content url is empty : BREAK.');
                 break;
             }
+            Log::info('start find chapter-list for a site content url:' . $anyContentUrl);
             //dump($anyContentUrl);
             try {
                 $contentHtml = QueryList::getInstance()->get($anyContentUrl)->getHtml();
                 sleep(1);
+                //Log::debug($contentHtml);
                 $clurl = AI::findChapterListUrl($contentHtml, $anyContentUrl);
-                //dump($clurl);exit;
+                if (!$clurl) {
+                    Log::info('find site link empty. go to next. ' . $clurl);
+                    continue;
+                }
+                Log::info('find site chapter url : ' . $clurl);
                 $clHtml = QueryList::getInstance()->get($clurl)->getHtml();
                 $contentUrl = AI::findContentUrl($clHtml, $chapter['title'], $clurl);
-                //dump($contentUrl);
+                //Log::debug($clHtml);
+                Log::info('find site content url : ' . $contentUrl);
                 if ($contentUrl) {
+                    Log::info('[1]content url : ' .$contentUrl);
                     return $contentUrl;
                 }
                 
             } catch (\Exception $ex) {
                 //dump($ex);
-                break;
+                Log::info('find site content url error:');
+                Log::error($ex);
+                continue;
             }
         }
         if (!$contentUrl) {
+            Log::info('find ALL site content url error:');
             throw new \Exception('error : search content url from sodu.');
         }
-        dump($contentUrl);
-        //$contentUrl = 'http://192.168.56.101/test.html';
-        //dump($contentUrl);
         return $contentUrl;
     }
 

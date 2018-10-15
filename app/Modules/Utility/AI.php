@@ -4,6 +4,7 @@ namespace App\Modules\Utility;
 use QL\QueryList;
 use phpQuery;
 use App\Modules\Utility\StringUtility;
+use Illuminate\Support\Facades\Log;
 
 class AI
 {
@@ -45,8 +46,17 @@ class AI
         $base = self::getUrlBase($url);
         $links = self::findAllSiteLinks($html);
         $needles = self::getChapterListNeedle();
+        Log::info($needles);
+        Log::info($links);
         foreach ($needles as $needle) {
-            $position = array_search($needle, $links);
+            //$position = array_search($needle, $links);
+            $position = false;
+            foreach ($links as $title => $href) {
+                if ($title == $needle) {
+                    $position = $href;
+                    break;
+                }
+            }
             if ($position !== false) {
                 $parses = self::parseUrl($position, null);
                 if (isset($parses['scheme'])) {
@@ -61,7 +71,9 @@ class AI
     {
         $base = self::getUrlBase($url);
         $allLinks = self::findAllSiteLinks($chapterListHtml);
-        foreach ($allLinks as $href => $title) {
+        Log::info('chapter list all links:');
+        Log::info($allLinks);
+        foreach ($allLinks as $title => $href) {
             if (StringUtility::standardizationChapterTitle($title) == $chapterTitle) {
                 $parses = self::parseUrl($href, null);
                 if (isset($parses['scheme'])) {
@@ -97,8 +109,8 @@ class AI
             if (isset($links[$text]) && $links[$text] != $href ) {
                 //throw new \LogicException('Duplicate link text on ' . $text);
             }
-            //$links[$text] = $href;
-            $links[$href] = $text;
+            $links[$text] = $href;
+            //$links[$href] = $text;
         });
         return $links;
     }

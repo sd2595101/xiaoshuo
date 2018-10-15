@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container-fluid ">
+  @guest
     <div class="row justify-content-center index-box">
         <form name="f-search" action="/query" method="get" class="col-md-10">
             <div class="form-row">
@@ -13,5 +14,8 @@
             </div>
         </form>
     </div>
+  @else
+  {{-- show history --}}
+  @endguest
 </div>
 @endsection

@@ -12,6 +12,11 @@
         <li class="breadcrumb-item-bravo active" aria-current="page">{{$info['volume']}}</li>
       </ol>
     </nav>
+    <div class="chapter_opbox chapter_opbox_top center">
+      <a href="{{route('chapter', $book['bookid'])}}" class="gochapter"><span class="glyphicon glyphicon-list"></span> 目录</a>
+      <a href="{{$prev}}" class="prevchapter"><span class="glyphicon glyphicon-arrow-left"></span> 上一章</a>
+      <a href="{{$next}}" class="nextchapter"><span class="glyphicon glyphicon-arrow-right"></span> 下一章</a>
+    </div>
     <div class="row center">
         <div class="col">
             <h1 class="m-2">{{$info['title']}}</h1>
@@ -23,6 +28,11 @@
             <p>{{$content}}</p>
             @endforeach
         </div>
+    </div>
+    <div class="chapter_opbox chapter_opbox_bottom center">
+      <a href="{{route('chapter', $book['bookid'])}}" class="gochapter"><span class="glyphicon glyphicon-list"></span> 目录</a>
+      <a href="{{$prev}}" class="prevchapter"><span class="glyphicon glyphicon-arrow-left"></span> 上一章</a>
+      <a href="{{$next}}" class="nextchapter"><span class="glyphicon glyphicon-arrow-right"></span> 下一章</a>
     </div>
 </div>
 <div id="gotop" title="返回顶部"><a href="javascript:void(0);" onclick="gotop();return false;"><i class="fas fa-2x fa-angle-double-up"></i></a></div>

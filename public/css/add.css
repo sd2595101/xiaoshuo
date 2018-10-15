@@ -97,3 +97,26 @@ li, ol, ul {
 
 #gotop{ position:fixed;right:2rem;bottom:2rem;}
 
+.chapter_opbox {
+	display: table;
+    height: 1.8rem;
+    width: 100%;
+    border-spacing: 5px 0;
+}
+.chapter_opbox_top {
+	margin-top: -1rem;
+	margin-bottom: 2rem;
+}
+.chapter_opbox a {
+	background: rgba(0,0,0,.03);
+    border-radius: 2px;
+    height: 1.8rem;
+    display: table-cell;
+    border-collapse: separate;
+    line-height: 1.8rem;
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+    letter-spacing: .93px;
+    width: 180px;
+}
