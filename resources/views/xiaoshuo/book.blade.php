@@ -6,7 +6,7 @@
     <div class="row">
       <div class="col-5 col-sm-4 col-md-3 col-lg-3 ">
         <div class="p-2">
-          <a href="/xiaoshuo/chapter/{{$book['bookid']}}.html">
+          <a href="{{route('chapter', $book['bookid'])}}">
             <img src="{{$book['image']}}" class="inner" style="width:100%;"/>
           </a>
         </div>
@@ -15,9 +15,9 @@
         <div class="p-2">
           <div class="row">
             <span class="h1">
-              <a href="/xiaoshuo/chapter/{{$book['bookid']}}.html">{{$book['title']}}</a>
+              <a href="{{route('chapter', $book['bookid'])}}">{{$book['title']}}</a>
             </span>
-            <a href="/xiaoshuo/chapter/{{$book['bookid']}}.html" class="p-1 m-1 text-right text-info">
+            <a href="{{route('chapter', $book['bookid'])}}" class="p-1 m-1 text-right text-info">
              [ <span class="fa glyphicon glyphicon-list"></span> 章节目录 ] </a>
           </div>
           <div class="row">

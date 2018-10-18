@@ -8,14 +8,6 @@
     "license": "MIT",
     "type": "project",
     "repositories": {
-        "querylist": {
-            "type": "vcs",
-            "url": "https://github.com/sd2595101/QueryList"
-        },
-        "bdspider": {
-            "type": "vcs",
-            "url": "https://github.com/bdspider/bdspider"
-        },
         "packagist": {
             "type": "composer",
             "url": "https://packagist.laravel-china.org"
@@ -23,9 +15,9 @@
     },
     "require": {
         "php": "^7.1.3",
-        "bdspider/bdspider": "^1.0",
+        "bdspider/bdspider": "^1.0.1",
+        "bdspider/querylist": "dev-master",
         "fideloper/proxy": "^4.0",
-        "jaeger/querylist": "4.1.2",
         "jenssegers/mongodb": "^3.4",
         "laravel/framework": "5.6.*",
         "laravel/tinker": "^1.0",

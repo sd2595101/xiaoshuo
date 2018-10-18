@@ -4,7 +4,7 @@
 <div class="container-fluid ">
   @guest
     <div class="row justify-content-center index-box">
-        <form name="f-search" action="/query" method="get" class="col-md-10">
+        <form name="f-search" action="{{ route('query') }}" method="get" class="col-md-10">
             <div class="form-row">
                 <div class="keyword-input">
                     <i class="fa fa-search"></i>

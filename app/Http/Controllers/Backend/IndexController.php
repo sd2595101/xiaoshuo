@@ -7,7 +7,7 @@ use App\Modules\Crawler\Book\Director;
 use App\Modules\Sites\Zhongheng\Book;
 use Illuminate\Support\Facades\Auth;
 
-class BookController extends Controller
+class IndexController extends Controller
 {
 
     /**

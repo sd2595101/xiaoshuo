@@ -34,7 +34,7 @@
       ?>
       <li class="col-4 {{ $isVip ? 'vip' : '' }}">
         
-        <a href="/xiaoshuo/chapter/{{$book['bookid']}}/{{$chapter['chapterid']}}.html">
+        <a href="{{ route('content', [$book['bookid'], $chapter['chapterid']]) }}">
           @if ($isVip ==true)
         <span class="glyphicon glyphicon-star"></span>
         @endif{{$chapter['chaptername']}}

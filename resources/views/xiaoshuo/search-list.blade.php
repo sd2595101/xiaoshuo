@@ -13,7 +13,7 @@
             <div class="p-2">
                 <div class="row">
                     <span class="h3">
-                        <a href="/xiaoshuo/book/{{$book['bookid']}}.html"><span class="fa glyphicon glyphicon-book"></span>{{$book['title']}}</a>
+                        <a href="{{route('book', $book['bookid'])}}"><span class="fa glyphicon glyphicon-book"></span>{{$book['title']}}</a>
                     </span>
                 </div>
                 <div class="row">
@@ -27,11 +27,11 @@
                 </div>
                 <div class="list-btn-area  d-none d-md-block d-lg-block">
                     <div>
-                        <a href="/xiaoshuo/book/{{$book['bookid']}}.html" class="p-1 m-1 text-right text-danger" >
+                        <a href="{{route('book', $book['bookid'])}}" class="p-1 m-1 text-right text-danger" >
                             [ <span class="fa glyphicon glyphicon-book"></span> 查看书页 ] </a>
                     </div>
                     <div>
-                        <a href="/xiaoshuo/chapter/{{$book['bookid']}}.html" class="p-1 m-1 text-right text-danger" >
+                        <a href="{{route('chapter', $book['bookid'])}}" class="p-1 m-1 text-right text-danger" >
                             [ <span class="fa glyphicon glyphicon-list"></span> 章节目录 ] </a>
                     </div>
                 </div>
