@@ -9,17 +9,24 @@ blockquote, body, button, dd, dl, dt, embed, fieldset, form, h1, h2, h3, h4, h5,
 	letter-spacing: 1px;
     line-height: 2em;
     text-indent: 2em;
-    padding: .5em .3em;
+    padding: .3em .3em;
 }
+
 .chapter-container {
   clear:both;
   overflow: auto;
 }
+/*
 .col-4 {
     width: 30%;
     float: left;
     padding-right: 60px;
 }
+*/
+.chapter-list li {
+    float: left;
+}
+
 
 .chapter-list {
     overflow: hidden;
@@ -28,12 +35,13 @@ blockquote, body, button, dd, dl, dt, embed, fieldset, form, h1, h2, h3, h4, h5,
 }
 
 .chapter-list>* {
-    padding: 11px 0;
+    padding: .6rem 0;
     position: relative;
     border-bottom: 1px #e2ad0f dotted;
 }
 .chapter-list a {
     float: left;
+    text-align: left;
     max-width: 80%;
     line-height: 16px;
     overflow: hidden;
@@ -97,3 +105,47 @@ li, ol, ul {
 
 #gotop{ position:fixed;right:2rem;bottom:2rem;}
 
+.chapter_opbox {
+	display: table;
+    height: 1.8rem;
+    width: 100%;
+    border-spacing: 5px 0;
+}
+.chapter_opbox_top {
+	margin-top: -1rem;
+	margin-bottom: 2rem;
+}
+.chapter_opbox a {
+	background: rgba(0,0,0,.03);
+    border-radius: 2px;
+    height: 1.8rem;
+    display: table-cell;
+    border-collapse: separate;
+    line-height: 1.8rem;
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+    letter-spacing: .93px;
+    width: 180px;
+}
+@media (min-width: 576px) {
+	.container {
+	    max-width: 100%;
+	}
+}
+@media (min-width: 768px) {
+  .container {
+    max-width: 740px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}

@@ -82,7 +82,7 @@ return [
             'driver' => 'mongodb',
             'host' => explode(',', env('MONGO_DB_HOST', '127.0.0.1')),
             'port' => env('MONGO_DB_PORT', 27017),
-            'database' => env('MONGO_DB_DATABASE', 'xiaoshuo'),
+            'database' => env('MONGO_DB_DATABASE', 'bravo'),
         ],
 
     ],

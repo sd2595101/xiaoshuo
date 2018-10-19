@@ -2,10 +2,13 @@
 namespace App\Http\Controllers\Xiaoshuo;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
 use App\Modules\Crawler\Book\Director;
 use App\Modules\Sites\Zhongheng\Book;
-use Illuminate\Support\Facades\Auth;
+//use Illuminate\Support\Facades\Auth;
+
+use App\Entites\Book\Book as EntiteBook;
+use App\User;
 
 class BookController extends Controller
 {
@@ -30,19 +33,22 @@ class BookController extends Controller
     /**
      * Handle a login request to the application.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      *
      * @throws \Illuminate\Validation\ValidationException
      */
     public function index($bookid)
     {
-        $builder = new Book();
-        $director = new Director($builder);
-        $info = $director->build($bookid);
+        $bookinfodb = EntiteBook::where('bookid', '=', $bookid)->get();
         
-        //$isLogin = !Auth::guest();
-        //dump($isLogin);
+        if (count($bookinfodb) == 0) {
+            $builder = new Book();
+            $director = new Director($builder);
+            $info = $director->build($bookid);
+            EntiteBook::create($info);
+        } else {
+            $info = $bookinfodb[0]->toArray();
+        }
 
         return view('xiaoshuo.book', array('book' => $info));
     }

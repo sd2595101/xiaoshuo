@@ -1,19 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container-fluid ">
     @foreach ($booklist as $book)
     <div class="row border-bottom list">
-        <div class="col-5 col-sm-4 col-md-3 col-lg-2 ">
+        <div class="col-3 col-sm-3 col-md-2 col-lg-2 ">
             <div class="p-2">
                 <img src="{{$book['image']}}" class="inner" style="width:100%;"/>
             </div>
         </div>
-        <div class="col-7 col-sm-8 col-md-9 col-lg-9 ">
+        <div class="col-9 col-sm-9 col-md-10 col-lg-10 ">
             <div class="p-2">
                 <div class="row">
-                    <span class="h1">
-                        <a href="/xiaoshuo/book/{{$book['bookid']}}.html">{{$book['title']}}</a>
+                    <span class="h3">
+                        <a href="{{route('book', $book['bookid'])}}"><span class="fa glyphicon glyphicon-book"></span>{{$book['title']}}</a>
                     </span>
                 </div>
                 <div class="row">
@@ -25,13 +25,13 @@
                 <div class="description text-left">
                     {{$book['desc']}}
                 </div>
-                <div class="list-btn-area">
+                <div class="list-btn-area  d-none d-md-block d-lg-block">
                     <div>
-                        <a href="/xiaoshuo/book/{{$book['bookid']}}.html" class="p-1 m-1 text-right text-danger" >
+                        <a href="{{route('book', $book['bookid'])}}" class="p-1 m-1 text-right text-danger" >
                             [ <span class="fa glyphicon glyphicon-book"></span> 查看书页 ] </a>
                     </div>
                     <div>
-                        <a href="/xiaoshuo/chapter/{{$book['bookid']}}.html" class="p-1 m-1 text-right text-danger" >
+                        <a href="{{route('chapter', $book['bookid'])}}" class="p-1 m-1 text-right text-danger" >
                             [ <span class="fa glyphicon glyphicon-list"></span> 章节目录 ] </a>
                     </div>
                 </div>

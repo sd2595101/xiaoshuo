@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container">
+<div class="container-fluid">
   <nav aria-label="breadcrumb-bravo">
     <ol class="breadcrumb-bravo">
       <li class="breadcrumb-item-bravo"><a href="/"><span class="glyphicon glyphicon-home"></span></a></li>
@@ -21,9 +21,9 @@
       <span>作者&nbsp;：&nbsp;{{$book['uname']}}</span>
     </div>
   </div>
-  <div class="container">
+  <div class="center container-fluid">
     @foreach ($list as $group)
-    <div class="container  chapter-container tomename">
+    <div class="chapter-container tomename">
       <div class="col"><h3>{{$group['volume']}}</h3></div>
     </div>
     <ul class="chapter-list">
@@ -32,13 +32,11 @@
           $chapterId = $chapter['chapterid'];
           $isVip = in_array($chapterId, $group['chapter-list-vip']);
       ?>
-      <li class="col-4 {{ $isVip ? 'vip' : '' }}">
+      <li class="col-12 col-sm-6 col-lg-4 col-md-6 {{ $isVip ? 'vip' : '' }}">
         
-        <a href="/xiaoshuo/chapter/{{$book['bookid']}}/{{$chapter['chapterid']}}.html">
-          @if ($isVip ==true)
-        <span class="glyphicon glyphicon-star"></span>
-        @endif{{$chapter['chaptername']}}
-        </a>
+        <a href="{{ route('content', [$book['bookid'], $chapter['chapterid']]) }}">
+        @if ($isVip ==true)<span class="glyphicon glyphicon-star-empty"></span>@endif
+        {{trim($chapter['chaptername'])}}</a>
       </li>
       @endforeach
     </ul>

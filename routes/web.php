@@ -15,20 +15,20 @@
 //     return view('welcome');
 // });
 
-Route::match(['get'], '/', 'Xiaoshuo\IndexController@index')->name('index');
+Route::get('/home', 'HomeController@index')->name('home');
 
-Route::match(['get'], '/xiaoshuo', 'Xiaoshuo\IndexController@index');
-
-Route::match(['get'], '/query', 'Xiaoshuo\SearchController@search')->name('query');
-
-Route::match(['get'], '/xiaoshuo/book/{bookid}.html', 'Xiaoshuo\BookController@index')->name('book');
-
-Route::match(['get'], '/xiaoshuo/chapter/{bookid}.html', 'Xiaoshuo\ChapterController@index')->name('chapter');
-
-Route::match(['get'], '/xiaoshuo/chapter/{bookid}/{chapterid}.html', 'Xiaoshuo\ContentController@index')->name('content');
+//Route::get('/test', 'TestController@index')->name('test');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::domain('im-bravo.com')->group(function () {
+    require 'FrontEnd.php';
+});
 
-Route::get('/test', 'TestController@index')->name('test');
+Route::domain('novel.im-bravo.com')->group(function () {
+    require 'FrontEnd.php';
+});
+
+Route::domain('novel-manager.im-bravo.com')->group(function () {
+    require 'BackEnd.php';
+});
