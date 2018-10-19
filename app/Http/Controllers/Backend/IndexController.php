@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Xiaoshuo;
+namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -7,15 +7,19 @@ use App\Modules\Crawler\Book\Director;
 use App\Modules\Sites\Zhongheng\Book;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Foundation\Auth\RedirectsUsers;
+
+
 class IndexController extends Controller
 {
+    use RedirectsUsers;
 
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/login';
 
     /**
      * Create a new controller instance.
@@ -24,9 +28,9 @@ class IndexController extends Controller
      */
     public function __construct()
     {
-        
+        $this->middleware('auth:backend');
     }
-
+    
     /**
      * Handle a login request to the application.
      *
@@ -35,15 +39,12 @@ class IndexController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function index($bookid)
+    public function index(Request $request)
     {
-        $builder = new Book();
-        $director = new Director($builder);
-        $info = $director->build($bookid);
         
-        //$isLogin = !Auth::guest();
-        //dump($isLogin);
-
-        return view('xiaoshuo.book', array('book' => $info));
+        $u = Auth::user();
+        
+        
+        
     }
 }
