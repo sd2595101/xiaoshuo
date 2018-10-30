@@ -10,12 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+//Auth::routes();
 
-
-Route::match(['get'], '/', 'Xiaoshuo\IndexController@index')->name('index');
+Route::match(['get'], '/', 'Xiaoshuo\IndexController@index')->name('top');
 Route::match(['get'], '/search', 'Xiaoshuo\SearchController@search')->name('query');
 Route::match(['get'], '/book/{bookid}.html', 'Xiaoshuo\BookController@index')->name('book');
-//Route::match(['get'], '/book/{bookid}', 'Xiaoshuo\BookController@index')->name('book');
 Route::match(['get'], '/chapter/{bookid}.html', 'Xiaoshuo\ChapterController@index')->name('chapter');
-//Route::match(['get'], '/chapter/{bookid}/', 'Xiaoshuo\ChapterController@index')->name('chapter');
 Route::match(['get'], '/chapter/{bookid}/{chapterid}.html', 'Xiaoshuo\ContentController@index')->name('content');

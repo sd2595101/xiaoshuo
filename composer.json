@@ -17,6 +17,7 @@
         "php": "^7.1.3",
         "bdspider/bdspider": "^1.0.1",
         "bdspider/querylist": "dev-master",
+        "encore/laravel-admin": "^1.6",
         "fideloper/proxy": "^4.0",
         "jenssegers/mongodb": "^3.4",
         "laravel/framework": "5.6.*",

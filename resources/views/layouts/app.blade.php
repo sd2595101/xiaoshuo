@@ -24,14 +24,14 @@
   </head>
   <body class="content-body">
     <nav class="navbar navbar-expand-md navbar-bravo bg-navbar-bravo">
-      <a class="navbar-brand" href="{{ url('/') }}"><image src="/images/logo.png" alt="{{ config('app.name', 'Laravel') }}" style="height:2rem;" /></a>
+      <a class="navbar-brand" href="{{ route('top') }}"><image src="/images/logo.png" alt="{{ config('app.name', 'Laravel') }}" style="height:2rem;" /></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
           </li>
           
           <!-- Authentication Links -->

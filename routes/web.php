@@ -11,24 +11,15 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
-Route::get('/home', 'HomeController@index')->name('home');
 
-//Route::get('/test', 'TestController@index')->name('test');
+Route::get('/', 'Xiaoshuo\IndexController@index')->name('top');
 
-Auth::routes();
+Route::domain('im-bravo.com')->group(function () {
+    Auth::routes();
+});
 
 Route::domain('im-bravo.com')->group(function () {
     require 'FrontEnd.php';
 });
 
-Route::domain('novel.im-bravo.com')->group(function () {
-    require 'FrontEnd.php';
-});
-
-Route::domain('novel-manager.im-bravo.com')->group(function () {
-    require 'BackEnd.php';
-});
