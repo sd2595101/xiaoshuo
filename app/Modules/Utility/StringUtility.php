@@ -16,8 +16,6 @@ class StringUtility
     public static function convertEncoding($value, $form = 'GBK')
     {
         return mb_convert_encoding($value, self::INNER_ENCODING, $form);
-        //return mb_convert_encoding($value, self::INNER_ENCODING, $form);
-        //return iconv($form, self::INNER_ENCODING, $value);
     }
     public static function makeUnPContent2List($value)
     {

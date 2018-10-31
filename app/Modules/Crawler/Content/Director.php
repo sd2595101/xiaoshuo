@@ -10,13 +10,13 @@ use phpQuery;
 
 class Director
 {
-	public $builder;
-	private static $ghttpclient = null;
+    public $builder;
+    private static $ghttpclient = null;
 
-	public function __construct(BuilderInterface $builder)
-	{
-		$this->builder = $builder;
-	}
+    public function __construct(BuilderInterface $builder)
+    {
+        $this->builder = $builder;
+    }
     
     public static function getCacheKey($bookid, $chapterid, $site = null)
     {
@@ -37,20 +37,21 @@ class Director
     }
     
 
-	public function build($bookid, $chapterid, $site = null)
-	{
-	    $key = __CLASS__.'::'.__FUNCTION__ .'::bookid::'.$bookid . '::chapterid::'.$chapterid . '::site::'.$site;
-	    
-	    if (!Cache::has($key)) {
-	        Cache::forever($key, $this->rebuild($bookid, $chapterid, $site));
-	    }
-	    
-	    $result = Cache::get($key);
+    public function build($bookid, $chapterid, $site = null)
+    {
+        $key = __CLASS__.'::'.__FUNCTION__ .'::bookid::'.$bookid . '::chapterid::'.$chapterid . '::site::'.$site;
+        
+        if (!Cache::has($key)) {
+            Cache::forever($key, $this->rebuild($bookid, $chapterid, $site));
+        }
+        
+        $result = Cache::get($key);
+        
         if (!isset($result['content'])) {
             Cache::forget($key);
         }
         return $result;
-	}
+    }
     public static function getGHttpClient()
     {
         if (is_null(self::$ghttpclient)) {
@@ -58,41 +59,72 @@ class Director
         }
         return self::$ghttpclient;
     }
-	private function rebuild($bookid, $chapterid, $site = null)
-	{
+    private function rebuild($bookid, $chapterid, $site = null)
+    {
         $url = $this->builder->url($bookid, $chapterid);
         //
         //$ql = QueryList::getInstance()->get($url);
-        //dump($ql);
+        
+        if (!$url) {
+            
+            throw new \Exception('get url error.' . get_class($this->builder));
+            
+        }
+        $host = parse_url($url, PHP_URL_HOST);
+        $headers = [
+            'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+            'Accept-Encoding' => 'gzip, deflate',
+            //'Accept-Language' => 'en-US,en;q=0.9,ja;q=0.8',
+            //'Cache-Control' => 'max-age=0',
+            'Connection' => 'keep-alive',
+            //'Host' => $host,
+            //'If-None-Match' => '1540971531|',
+            //'Upgrade-Insecure-Requests' => '1',
+            'User-Agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+        ];
         
         $client = self::getGHttpClient();
         $realRequestOption = [
-            GROption::ALLOW_REDIRECTS => false
+            'headers' => $headers,
+            GROption::ALLOW_REDIRECTS => [
+                'max'             => 10,        // allow at most 10 redirects.
+                'protocols'       => ['https','http'],
+                'track_redirects' => true
+            ],
         ];
+        
         if (!Cache::has($url)) {
-	        $response = $client->request('GET', $url, $realRequestOption);
-	        $html = $response->getBody()->getContents();
-	        
-	        
-	        Cache::set($url, $html, 12 * 60);
-        } 
+            sleep(1);
+            $response = $client->request('GET', $url, $realRequestOption);
+            $html = $response->getBody()->getContents();
+            
+            $doc = phpQuery::newDocumentHTML($html);
+            if (strtoupper($doc->charset) != 'UTF-8') {
+                $html = mb_convert_encoding($html, 'UTF-8', $doc->charset);
+                $html = str_replace('charset='.$doc->charset,'charset=utf-8',$html);
+            }
+            
+            Cache::set($url, $html, 12 * 60);
+        } else {
+            //dump($url);
+            //Cache::forget($url);
+        }
+        //dump($url);
         $html = Cache::get($url);
         
         $doc = phpQuery::newDocumentHTML($html);
         
-        if (strtoupper($doc->charset) != 'UTF-8') {
-            $html = mb_convert_encoding($html, 'UTF-8', $doc->charset);
-            $html = str_replace('charset='.$doc->charset,'charset=utf-8',$html);
-        }
+        
         
         $ql = QueryList::html($html);
-	    $result = $ql
-        	    ->rules($this->builder->roules())
-        	    ->query()
-        	    ->getData();
+        
+        $result = $ql
+                ->rules($this->builder->roules())
+                ->query()
+                ->getData();
         
         $info = $result[0] ?? $result;
         $info['original_url'] = $url;
         return $info;
-	}
+    }
 }

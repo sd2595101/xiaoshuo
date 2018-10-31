@@ -7,7 +7,7 @@ use App\Modules\Crawler\Book\Director;
 use App\Modules\Sites\Zhongheng\Book;
 //use Illuminate\Support\Facades\Auth;
 
-use App\Entites\Book\Book as EntiteBook;
+use App\Models\Book\Book as EntiteBook;
 use App\User;
 
 class BookController extends Controller

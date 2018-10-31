@@ -1,5 +1,5 @@
 <?php
-namespace App\Entites\Book;
+namespace App\Models\Book;
 
 //use Illuminate\Database\Eloquent\Model;
 use Jenssegers\Mongodb\Eloquent\Model;
@@ -9,6 +9,7 @@ class Book extends Model
 
     //
     protected $connection = 'mongodb';
+    
     protected $fillable = [
         "image",
         "image-title",

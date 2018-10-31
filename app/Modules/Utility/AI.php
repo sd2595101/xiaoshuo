@@ -12,11 +12,15 @@ class AI
     
     const SKIP_SITE = [
         'www.liaoshu.net',
+        'www.prwx.com',
+        'www.76wx.com',
+        'www.81xsw.com',
     ];
     
     public static function isNGSite($url)
     {
         $host = self::parseUrl($url, PHP_URL_HOST);
+        
         return in_array($host, self::SKIP_SITE);
     }
     
@@ -28,6 +32,7 @@ class AI
             '章节目录',
             '查看目录',
             '目录',
+            '返回书目',
         ];
     }
     
@@ -56,13 +61,14 @@ class AI
         $base = self::getUrlBase($url);
         $links = self::findAllSiteLinks($html);
         $needles = self::getChapterListNeedle();
-        Log::info($needles);
-        Log::info($links);
+        
         foreach ($needles as $needle) {
             //$position = array_search($needle, $links);
             $position = false;
-            foreach ($links as $title => $href) {
+            foreach ($links as $val) {
+                list ($title, $href) = $val;
                 if ($title == $needle) {
+                    Log::info('find [' . $title . '|' . $href . '] from url : ' . $url);
                     $position = $href;
                     break;
                 }
@@ -81,25 +87,54 @@ class AI
     {
         $base = self::getUrlBase($url);
         $allLinks = self::findAllSiteLinks($chapterListHtml, $url);
+        dump($allLinks);
+        exit;
         Log::info('chapter list all links:');
         Log::info($allLinks);
-        foreach ($allLinks as $title => $href) {
-            if (StringUtility::standardizationChapterTitle($title) == $chapterTitle) {
-                return self::makeAbsolutePath($href, $url);
-            }
-        }
-        return false;
+        return self::findContentUrlByLinks($chapterTitle, $allLinks);
     }
     
     public static function findContentUrlByLinks($chapterTitle, $allLinks)
     {
-        foreach ($allLinks as $title => $href) {
-            if (StringUtility::standardizationChapterTitle($title) == $chapterTitle) {
+        foreach ($allLinks as $val) {
+            list ($title, $href) = $val;
+            if (self::equalsContentTitle($title, $chapterTitle)) {
                 return $href;
             }
         }
         return false;
     }
+    
+    public static function equalsContentTitle($title1, $title2)
+    {
+        if ($title1 == $title2) {
+            return true;
+        }
+        $title1 = StringUtility::standardizationChapterTitle($title1);
+        $title2 = StringUtility::standardizationChapterTitle($title2);
+        if ($title1 == $title2) {
+            return true;
+        }
+        
+        $title1 = self::getContentTitleWithoutNumber($title1);
+        $title2 = self::getContentTitleWithoutNumber($title2);
+        return $title2 == $title1;
+    }
+    
+    public static function getContentTitleWithoutNumber($title)
+    {
+        $title = StringUtility::standardizationChapterTitle($title);
+        $parts = explode(' ', $title);
+        
+        if (count($parts) == 2) {
+            return $parts[1];
+        }
+        
+        return $title;
+    }
+    
+    
+    
     
     public static function makeAbsolutePath($href, $pageUrl)
     {
@@ -120,6 +155,7 @@ class AI
         
         return str_replace('//', '/', $raw);
     }
+    
     public static function findAllSiteLinks($html, $pageUrl = null)
     {
         
@@ -140,15 +176,18 @@ class AI
             if ($text == '') {
                 return;
             }
-            if (isset($links[$text]) && $links[$text] != $href ) {
-                //throw new \LogicException('Duplicate link text on ' . $text);
-            }
-            $links[$text] = $href;
+            //if (isset($links[$text]) && $links[$text] != $href ) {
+            //    //throw new \LogicException('Duplicate link text on ' . $text);
+            //}
             //$links[$href] = $text;
+            $links[$text] = $href;
+            
+            $links[] = [$href, $text];
         });
         if (!is_null($pageUrl)) {
             foreach ($links as $key => $val) {
-                $links[$key] = self::makeAbsolutePath($val, $pageUrl);
+                
+                $links[$key][0] = self::makeAbsolutePath($val[0], $pageUrl);
             }
         }
         return $links;
