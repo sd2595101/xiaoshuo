@@ -19,10 +19,10 @@ class CreateSitesTable extends Migration
         Schema::connection($connection)->create('sites', function (Blueprint $table) {
             $table->increments('id');
             $table->string('url', 300)->unique();
-            $table->string('name');
-            $table->string('describe');
+            $table->string('name')->nullable();
+            $table->string('describe')->nullable();
             $table->string('enable', 1);
-            $table->datetime('release_at');
+            $table->datetime('release_at')->nullable();
             $table->timestamps();
         });
     }

@@ -87,7 +87,7 @@ class SitesController extends Controller
         $grid->id('ID')->sortable();
         $grid->name('Site name');
         $grid->url('Site URL')->link();
-        $grid->enable('Enable');
+        $grid->enable('Enable')->using(['1' => 'Enable', '0' => 'Disable'])->badge('light');
         $grid->created_at('Created at');
         $grid->updated_at('Updated at');
 
@@ -107,6 +107,7 @@ class SitesController extends Controller
         $show->id('ID');
         $show->url('Site URL');
         $show->name('Site Name');
+        $show->enable('Enable')->using(['1' => 'Enable', '0' => 'Disable'])->badge();
         $show->describe('Description');
         $show->created_at('Created at');
         $show->updated_at('Updated at');
@@ -125,14 +126,14 @@ class SitesController extends Controller
             // Displays the record id
             $form->display('id', 'ID');
             // Add an input box of type text
-            $form->url('url', 'Site url');
-            $form->text('name', 'Site name');
+            $form->url('url', 'Site url')->rules('required');
+            $form->text('name', 'Site name')->rules('required');
             // Add textarea for the describe field
             $form->textarea('describe', 'Description');
             // Add a switch field
             $form->switch('enable', 'Enabled?');
             // Add a date and time selection box
-            $form->datetime('release_at', 'release time');
+            $form->datetime('release_at', 'release time')->rules('required');
             // Display two time column 
             $form->display('created_at', 'Created time');
             $form->display('updated_at', 'Updated time');
