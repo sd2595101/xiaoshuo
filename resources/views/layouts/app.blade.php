@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+    <meta http-equiv="x-pjax-version" content="v123">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="/favicon.ico">
@@ -21,6 +21,10 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/add.css') }}" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://unpkg.com/nprogress@0.2.0/nprogress.css">
+    <script src="http://im-bravo.com/vendor/laravel-admin/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    
   </head>
   <body class="content-body">
     <nav class="navbar navbar-expand-md navbar-bravo bg-navbar-bravo">
@@ -65,7 +69,7 @@
       </div>
     </nav>
     <div id="app">
-      <main class="py-4 content-body">
+      <main class="py-4 content-body" id="pjax-container">
         @yield('content')
       </main>
     </div>

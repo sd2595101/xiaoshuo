@@ -13,10 +13,15 @@ class Director
     {
         $this->builder = $builder;
     }
+    
+    public static function getCacheKey($bookid)
+    {
+        return __CLASS__ . '::' . __FUNCTION__ . '::bookid::' . $bookid;
+    }
 
     public function build($bookid)
     {
-        $key = __CLASS__ . '::' . __FUNCTION__ . '::bookid::' . $bookid;
+        $key = self::getCacheKey($bookid);
         //Cache::forget($key);
         if (!Cache::has($key)) {
             Cache::set($key, $this->rebuild($bookid), 60 * 12);
@@ -36,5 +41,11 @@ class Director
         });
         //
         return $result;
+    }
+    
+    public static function getCache($bookid)
+    {
+        $key = self::getCacheKey($bookid);
+        return Cache::get($key);
     }
 }

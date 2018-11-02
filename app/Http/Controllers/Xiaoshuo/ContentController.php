@@ -10,7 +10,7 @@ use App\Modules\Crawler\Book\Director as BookDirector;
 use App\Modules\Sites\Zhongheng\Book;
 
 use App\Modules\Crawler\Content\Director as ContentDirector;
-use App\Modules\Sites\Zhongheng\Content as ZhonghengContent;
+//use App\Modules\Sites\Zhongheng\Content as ZhonghengContent;
 
 use App\Modules\Sites\Other\Content as OtherContent;
 
@@ -46,9 +46,14 @@ class ContentController extends Controller
      */
     public function index($bookid,$chapterid)
     {
-        $content = new ZhonghengContent();
-        $director = new ContentDirector($content);
-        $contentData = $director->build($bookid, $chapterid);
+        try {
+            
+            $contentData = NovelUtility::getZHBookInfo2ContentData($bookid,$chapterid);
+        } catch (\App\Modules\Crawler\NoCachedChapterException $ex) {
+            return redirect(route('book', [$bookid]));
+        }
+        //dump($contentData);
+        ContentDirector::setCache($bookid,$chapterid, $contentData);
         
         if ($contentData['isvip']) {
             try {
@@ -86,8 +91,11 @@ class ContentController extends Controller
             'prev' => $page['prev'] ? $page['prev'] . '.html' : '',
             'next' => $page['next'] ? $page['next'] . '.html' : '',
         ));
-
-        
+    }
+    
+    
+    public function ijax($bookid,$chapterid)
+    {
         
     }
 }

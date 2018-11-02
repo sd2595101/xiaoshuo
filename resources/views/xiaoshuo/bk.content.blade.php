@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container">
+<div class="container" id="pjax-container">
     <nav aria-label="breadcrumb-bravo">
       <ol class="breadcrumb-bravo">
         <li class="breadcrumb-item-bravo"><a href="/"><span class="glyphicon glyphicon-home"></span></a></li>
@@ -13,9 +13,9 @@
       </ol>
     </nav>
     <div class="chapter_opbox chapter_opbox_top center">
-      <a href="{{route('chapter', $book['bookid'])}}" class="gochapter"><span class="glyphicon glyphicon-list"></span> 目录</a>
-      <a href="{{$prev}}" class="prevchapter"><span class="glyphicon glyphicon-arrow-left"></span> 上一章</a>
-      <a href="{{$next}}" class="nextchapter"><span class="glyphicon glyphicon-arrow-right"></span> 下一章</a>
+      <a href="javascript:void(0);" onclick="golink(this);" data-href="{{route('chapter', $book['bookid'])}}" class="gochapter"><span class="glyphicon glyphicon-list"></span> 目录</a>
+      <a href="javascript:void(0);" onclick="golink(this);" data-href="{{$prev}}" class="prevchapter"><span class="glyphicon glyphicon-arrow-left"></span> 上一章</a>
+      <a href="javascript:void(0);" onclick="golink(this);" data-href="{{$next}}" class="nextchapter"><span class="glyphicon glyphicon-arrow-right"></span> 下一章</a>
     </div>
     <div class="row center">
         <div class="col">
@@ -29,6 +29,8 @@
         <p>{{$content}}</p>
         @endforeach
       </div>
+        
+        
     </div>
     <div class="chapter_opbox chapter_opbox_bottom center">
       <a href="{{route('chapter', $book['bookid'])}}" class="gochapter"><span class="glyphicon glyphicon-list"></span> 目录</a>
@@ -50,13 +52,15 @@
 <script src="http://im-bravo.com/vendor/laravel-admin/nprogress/nprogress.js"></script>
 <script>
 
+
 $.pjax.defaults.timeout = 5000;
 $.pjax.defaults.maxCacheLength = 0;
-$(document).pjax('a:not(a[target="_blank"])', {
-    container: '#pjax-container'
-});
+//$(document).pjax('a:not(a[target="_blank"])', {
+//    //container: '#pjax-container'
+//    container: '#app'
+//});
 
-NProgress.configure({parent: '#pjax-container'});
+NProgress.configure({parent: '#app'});
 
 $(document).on('pjax:timeout', function (event) {
     event.preventDefault();
@@ -67,7 +71,7 @@ $(document).on('submit', 'form[pjax-container]', function (event) {
 });
 
 $(document).on("pjax:popstate", function () {
-
+alert(1);
     $(document).one("pjax:end", function (event) {
         $(event.target).find("script[data-exec-on-popstate]").each(function () {
             $.globalEval(this.text || this.textContent || this.innerHTML || '');
@@ -76,6 +80,7 @@ $(document).on("pjax:popstate", function () {
 });
 
 $(document).on('pjax:send', function (xhr) {
+    console.log(xhr);
     if (xhr.relatedTarget && xhr.relatedTarget.tagName && xhr.relatedTarget.tagName.toLowerCase() === 'form') {
         $submit_btn = $('form[pjax-container] :submit');
         if ($submit_btn) {
@@ -94,7 +99,33 @@ $(document).on('pjax:complete', function (xhr) {
     }
     NProgress.done();
 });
-
-
+//var $_pjax = $.pjax;
+//console.log($_pjax);
+//$(function(){
+////    $('.prevchapter, .nextchapter').on('click', function(){
+////        //alert(3);
+////        //return false;
+////        $_pjax({
+////            url: $(this).data('href'),
+////            container: '#app'
+////        });
+////    });
+////$(document).pjax('.prevchapter, .nextchapter', '#pjax-container', [parent:'#app']);
+//});
+function golink(link) {
+    NProgress.start();
+    $.ajax({
+        method: 'get',
+        url: $(link).data('href'),
+        success: function(data){
+            //$.pjax.reload('#app');
+            //console.log($(data));
+            $('#app').html(data);
+            NProgress.done();
+            NProgress.remove();
+        }
+    });
+    return false;
+}
 </script>
 @endsection

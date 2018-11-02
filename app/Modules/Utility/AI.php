@@ -12,13 +12,26 @@ class AI
     
     const SKIP_SITE = [
         'www.liaoshu.net',
-        'www.prwx.com',
+        //'www.prwx.com',
         'www.76wx.com',
         'www.81xsw.com',
+        'www.sqsxs.com',
     ];
+    
+    public static function getBlocksites()
+    {
+        return [
+            'http://www.sodu.cc/newmulu_485157_59.html',
+            'http://www.sodu.cc/newmulu_485157_64.html',
+        ];
+    }
     
     public static function isNGSite($url)
     {
+        $blocklist = self::getBlocksites();
+        if (in_array($url, $blocklist)) {
+            return true;
+        }
         $host = self::parseUrl($url, PHP_URL_HOST);
         
         return in_array($host, self::SKIP_SITE);
@@ -56,8 +69,15 @@ class AI
         return $proto . '://'.$host.'/';
     }
     
+    /**
+     * 
+     * @param type $html
+     * @param type $url
+     * @return string
+     */
     public static function findChapterListUrl($html, $url)
     {
+        Log::info(__CLASS__ . '::' . __METHOD__ . "() -- start --");
         $base = self::getUrlBase($url);
         $links = self::findAllSiteLinks($html);
         $needles = self::getChapterListNeedle();
@@ -67,12 +87,15 @@ class AI
             $position = false;
             foreach ($links as $val) {
                 list ($title, $href) = $val;
+                //dump($title . ' -|- ' . $needle . ' -|- ' . $href);
                 if ($title == $needle) {
                     Log::info('find [' . $title . '|' . $href . '] from url : ' . $url);
                     $position = $href;
                     break;
                 }
             }
+            unset($val);
+            
             if ($position !== false) {
                 $parses = self::parseUrl($position, null);
                 if (isset($parses['scheme'])) {
@@ -87,10 +110,7 @@ class AI
     {
         $base = self::getUrlBase($url);
         $allLinks = self::findAllSiteLinks($chapterListHtml, $url);
-        dump($allLinks);
-        exit;
-        Log::info('chapter list all links:');
-        Log::info($allLinks);
+        
         return self::findContentUrlByLinks($chapterTitle, $allLinks);
     }
     
@@ -180,14 +200,14 @@ class AI
             //    //throw new \LogicException('Duplicate link text on ' . $text);
             //}
             //$links[$href] = $text;
-            $links[$text] = $href;
+            //$links[$text] = $href;
             
-            $links[] = [$href, $text];
+            $links[] = [$text, $href];
         });
         if (!is_null($pageUrl)) {
             foreach ($links as $key => $val) {
                 
-                $links[$key][0] = self::makeAbsolutePath($val[0], $pageUrl);
+                $links[$key][1] = self::makeAbsolutePath($val[1], $pageUrl);
             }
         }
         return $links;

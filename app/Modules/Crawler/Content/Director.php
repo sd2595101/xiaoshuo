@@ -30,6 +30,13 @@ class Director
         return Cache::get($key);
     }
     
+    public static function setCache($bookid, $chapterid, $content)
+    {
+        $key = self::getCacheKey($bookid, $chapterid, null);
+        
+        return Cache::forever($key, $content);
+    }
+    
     public static function clearCache($bookid, $chapterid, $site)
     {
         $key = self::getCacheKey($bookid, $chapterid, $site);
@@ -94,7 +101,7 @@ class Director
         ];
         
         if (!Cache::has($url)) {
-            sleep(1);
+            usleep(100);
             $response = $client->request('GET', $url, $realRequestOption);
             $html = $response->getBody()->getContents();
             
